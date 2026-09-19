@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trojan VPN</title>
+<meta name="description" content="Trojan VPN. Privacy built like an empire. Ancient discipline, modern encryption.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=UnifrakturCook:wght@700&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b0b0c;
+  --sky:#dbe6ee;
+  --bone:#e9e4d8;
+  --gold:#c9a96a;
+  --nav-gap:clamp(1.1rem,2.2vw,2.15rem);
+  --pad-x:clamp(1.25rem,4vw,3.6rem);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-in-out:cubic-bezier(.76,0,.24,1);
+  --poster:url("https://image.mux.com/uXyvc9N1d9WHBZWS1LGg3021OXXjT2ubcGbEQ1Z1uNmY/thumbnail.jpg?time=0");
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--bone);background:var(--ink);overflow-x:hidden;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI","Instrument Sans",Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+body.menu-open{overflow:hidden}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;background:var(--ink)}
+
+.hero__media{position:absolute;inset:0;z-index:0;background:var(--ink)}
+.hero__media canvas{width:100%;height:100%;display:block}
+/* scroll track: the hero is pinned while the user scrubs through the frames */
+.scrolltrack{position:relative;height:620vh;margin-bottom:-1px}
+.scrolltrack .hero{position:sticky;top:0;height:100vh;height:100svh;min-height:0}
+html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
+/* intro logo over the first frames */
+.intro{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;pointer-events:none;text-align:center;
+  background:radial-gradient(60% 60% at 50% 50%,rgba(11,11,12,.55),rgba(11,11,12,.15) 70%,transparent)}
+.intro__logo{font-family:"UnifrakturCook",serif;font-weight:700;font-size:clamp(3.4rem,11vw,10rem);line-height:.9;color:var(--bone);text-shadow:0 20px 80px rgba(0,0,0,.6);
+  opacity:0;transform:translateY(24px);animation:introIn 1.4s var(--ease) .2s forwards}
+.intro__sub{font-size:.72rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);opacity:0;animation:introIn 1.2s ease .7s forwards}
+.intro__cue{position:absolute;bottom:clamp(1.6rem,5vh,3rem);display:flex;flex-direction:column;align-items:center;gap:.6rem;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(233,228,216,.6);opacity:0;animation:introIn 1s ease 1.4s forwards}
+.intro__cue i{width:1px;height:2.4rem;background:linear-gradient(to bottom,var(--gold),transparent);transform-origin:top;animation:cue 2.2s var(--ease-in-out) infinite}
+@keyframes introIn{to{opacity:1;transform:none}}
+.hero__shade{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(to top, rgba(11,11,12,.92) 0%, rgba(11,11,12,.55) 32%, rgba(11,11,12,0) 62%),
+    linear-gradient(to right, rgba(11,11,12,.55) 0%, rgba(11,11,12,0) 55%),
+    linear-gradient(to bottom, rgba(11,11,12,.6) 0%, rgba(11,11,12,0) 22%);
+  opacity:0;transition:opacity 1.6s ease}
+.hero.is-revealed .hero__shade{opacity:1}
+/* subtle film grain */
+.hero__grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.07;background-size:200px 200px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:grain 1.2s steps(6) infinite;will-change:transform}
+@keyframes grain{0%{background-position:0 0}20%{background-position:-40px 30px}40%{background-position:30px -50px}60%{background-position:-20px 60px}80%{background-position:50px -20px}100%{background-position:0 0}}
+/* thin vertical guide lines like the reference */
+.hero__lines{position:absolute;inset:0;z-index:2;pointer-events:none;display:grid;grid-template-columns:repeat(5,1fr);padding:0 var(--pad-x);opacity:0;transition:opacity 2s ease .3s}
+.hero.is-revealed .hero__lines{opacity:1}
+.hero__lines span{border-left:1px solid rgba(233,228,216,.07);transform-origin:top;transform:scaleY(0);transition:transform 1.6s var(--ease)}
+.hero__lines span:last-child{border-right:1px solid rgba(233,228,216,.07)}
+.hero.is-revealed .hero__lines span{transform:scaleY(1)}
+.hero.is-revealed .hero__lines span:nth-child(2){transition-delay:.1s}
+.hero.is-revealed .hero__lines span:nth-child(3){transition-delay:.2s}
+.hero.is-revealed .hero__lines span:nth-child(4){transition-delay:.3s}
+.hero.is-revealed .hero__lines span:nth-child(5){transition-delay:.4s}
+
+/* ============ NAV ============ */
+.nav{position:relative;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  padding:clamp(1.1rem,2.4vh,1.8rem) var(--pad-x);
+  opacity:0;transform:translateY(-14px);transition:opacity 1s ease,transform 1.2s var(--ease)}
+.hero.is-revealed .nav,.nav.is-forced{opacity:1;transform:none}
+.logo{font-family:"UnifrakturCook",serif;font-weight:700;font-size:clamp(1.5rem,2.4vw,2rem);letter-spacing:.01em;line-height:1;display:flex;align-items:center;gap:.55rem}
+.logo small{font-family:"Instrument Sans",sans-serif;font-weight:500;font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;opacity:.6;margin-top:.3em}
+.nav__links{display:flex;gap:var(--nav-gap);list-style:none;margin:0;padding:0}
+.nav__links a{position:relative;font-size:.78rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:.35rem 0;opacity:.78;transition:opacity .4s}
+.nav__links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .6s var(--ease)}
+.nav__links a:hover,.nav__links a[aria-current]{opacity:1}
+.nav__links a:hover::after,.nav__links a[aria-current]::after{transform:scaleX(1);transform-origin:left}
+.nav__right{display:flex;align-items:center;gap:1.2rem}
+.btn-play{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  padding:.7rem 1.25rem;border:1px solid rgba(233,228,216,.35);border-radius:999px;transition:border-color .4s,background .4s,color .4s}
+.btn-play:hover{border-color:var(--gold);background:var(--gold);color:var(--ink)}
+.burger{display:none;width:44px;height:44px;position:relative}
+.burger span{position:absolute;left:10px;right:10px;height:1.5px;background:currentColor;transition:transform .6s var(--ease),opacity .4s,top .6s var(--ease)}
+.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:22px}.burger span:nth-child(3){top:28px}
+.burger[aria-expanded="true"] span:nth-child(1){top:22px;transform:rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){top:22px;transform:rotate(-45deg)}
+
+/* ============ HERO INNER ============ */
+.hero__inner{position:relative;z-index:10;flex:1 1 0;min-height:0;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 var(--pad-x) clamp(1.2rem,4vh,3rem);pointer-events:none}
+.hero__content{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,5rem);align-items:end;pointer-events:auto}
+.headline{font-family:"Instrument Serif",Georgia,serif;font-weight:400;margin:0;
+  font-size:clamp(2.2rem,4.6vw,4.4rem);line-height:1.02;letter-spacing:-.015em;text-align:left}
+.headline em{font-style:italic;color:var(--gold)}
+.headline .line{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.headline .line>span{display:block;transform:translateY(112%);opacity:0;transition:transform 1.25s var(--ease),opacity .8s ease}
+.hero.is-revealed .headline .line:nth-child(1)>span{transition-delay:.1s}
+.hero.is-revealed .headline .line:nth-child(2)>span{transition-delay:.24s}
+.hero.is-revealed .headline .line:nth-child(3)>span{transition-delay:.38s}
+.hero.is-revealed .headline .line>span{transform:none;opacity:1}
+.hero__aside{max-width:34ch;justify-self:end;padding-bottom:.4rem}
+.hero__aside p{margin:0 0 1.6rem;font-size:clamp(.92rem,1.05vw,1.05rem);line-height:1.6;color:rgba(233,228,216,.78)}
+.hero__cta{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.btn-solid{display:inline-flex;align-items:center;gap:.7rem;font-size:.78rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  padding:.95rem 1.6rem;border-radius:999px;background:var(--bone);color:var(--ink);transition:background .4s,transform .6s var(--ease)}
+.btn-solid:hover{background:var(--gold);transform:translateY(-2px)}
+.btn-solid svg{width:12px;height:12px;transition:transform .5s var(--ease)}
+.btn-solid:hover svg{transform:translateX(4px)}
+.link-plain{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;opacity:.75;border-bottom:1px solid rgba(233,228,216,.3);padding-bottom:.25rem;transition:opacity .4s,border-color .4s}
+.link-plain:hover{opacity:1;border-color:var(--gold)}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform 1.2s var(--ease)}
+.hero.is-revealed .reveal{opacity:1;transform:none}
+.hero.is-revealed .hero__aside .reveal:nth-child(1){transition-delay:.55s}
+.hero.is-revealed .hero__aside .reveal:nth-child(2){transition-delay:.7s}
+
+/* bottom meta strip */
+.hero__meta{display:flex;justify-content:space-between;align-items:center;margin-top:clamp(1.6rem,4vh,3rem);padding-top:1.1rem;
+  border-top:1px solid rgba(233,228,216,.14);font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(233,228,216,.55);pointer-events:auto}
+.hero__meta .rule{position:absolute;left:var(--pad-x);right:var(--pad-x);height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--ease) .6s;margin-top:-1.1rem}
+.hero.is-revealed .hero__meta .rule{transform:scaleX(1)}
+.hero__meta span{opacity:0;transform:translateY(10px);transition:opacity .8s ease .9s,transform 1s var(--ease) .9s}
+.hero.is-revealed .hero__meta span{opacity:1;transform:none}
+.scroll-cue{display:inline-flex;align-items:center;gap:.6rem}
+.scroll-cue i{width:1px;height:2.2rem;background:linear-gradient(to bottom,var(--gold),transparent);display:block;animation:cue 2.2s var(--ease-in-out) infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0);opacity:0}40%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1) translateY(100%);opacity:0}}
+
+/* nothing interactive before the reveal */
+.hero:not(.is-revealed) .nav{pointer-events:none}
+.hero .nav{transition:opacity .6s ease,transform 1.2s var(--ease)}
+
+
+/* ============ POST-VIDEO COMPOSITION ============ */
+/* frozen statue cut out from the last frame; sits above the wordmark so the letters read as behind it */
+.hero__cutout{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .4s ease}
+.hero.is-revealed .hero__cutout{opacity:1}
+/* .stage__frame is sized by JS to exactly the 16:9 box the cover-fit video occupies, so % coords below are video coords */
+.stage__frame{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}
+.stage__grid{position:absolute;left:-48px;top:-48px;width:calc(100% + 96px);height:calc(100% + 96px);opacity:0;transition:opacity 2s ease .6s;will-change:transform}
+.hero.is-revealed .stage__grid{opacity:.1}
+.stage__statue{position:absolute;left:29.933%;top:6.969%;width:39.565%;height:92.818%;display:block;
+  filter:drop-shadow(0 0 0 rgba(0,0,0,0));transition:filter 2.5s ease .4s}
+.hero.is-revealed .stage__statue{filter:drop-shadow(0 40px 70px rgba(0,0,0,.85))}
+.stage__reveal{position:absolute;left:29.933%;top:6.969%;width:39.565%;height:92.818%;
+  background:url("assets/statue2-cut.png?v=1789829587") 0 0/100% 100% no-repeat;
+  --sx:-9999px;--sy:-9999px;-webkit-mask-image:radial-gradient(260px circle at var(--sx) var(--sy),rgba(255,255,255,1) 0%,rgba(255,255,255,1) 40%,rgba(255,255,255,.75) 60%,rgba(255,255,255,.4) 75%,rgba(255,255,255,.12) 88%,rgba(255,255,255,0) 100%);mask-image:radial-gradient(260px circle at var(--sx) var(--sy),rgba(255,255,255,1) 0%,rgba(255,255,255,1) 40%,rgba(255,255,255,.75) 60%,rgba(255,255,255,.4) 75%,rgba(255,255,255,.12) 88%,rgba(255,255,255,0) 100%);opacity:0;transition:opacity .5s ease;will-change:opacity}
+
+.hero.is-revealed .hero__cutout{opacity:1}
+/* giant wordmark behind the statue */
+.hero__word{position:absolute;left:0;right:0;top:clamp(3.2rem,8vh,5.4rem);z-index:4;pointer-events:none;text-align:center;
+  font-family:"UnifrakturCook",serif;font-weight:700;line-height:.86;font-size:clamp(4.6rem,19vw,20rem);
+  color:var(--bone);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;padding-bottom:.08em}
+.hero__word{visibility:hidden}
+.hero.is-revealed .hero__word{visibility:visible}
+.hero__word span{display:block;transform:translateY(105%);opacity:0;transition:transform 1.6s var(--ease) .5s,opacity .9s ease .5s;
+  text-shadow:0 30px 80px rgba(0,0,0,.35)}
+.hero.is-revealed .hero__word span{transform:none;opacity:1}
+.hero__shade{background:
+    linear-gradient(to top, rgba(11,11,12,.9) 0%, rgba(11,11,12,.45) 26%, rgba(11,11,12,0) 52%),
+    linear-gradient(to bottom, rgba(11,11,12,.55) 0%, rgba(11,11,12,.1) 30%, rgba(11,11,12,0) 45%)}
+.hero__shade{z-index:1}
+/* dim and cool the frozen frame slightly so the composition reads */
+.hero.is-revealed .hero__media canvas{filter:brightness(.45) saturate(.6);transition:filter 1.6s ease}
+.hero__media canvas{transition:filter 1.2s ease}
+
+
+/* ============ SCROLL DIM (hero pinned, fades as you scroll) ============ */
+.hero__dim{position:absolute;inset:0;z-index:70;background:var(--ink);opacity:0;pointer-events:none}
+
+/* ============ SECTION 02: HISTORY ============ */
+.history{position:relative;z-index:1;background:var(--ink);color:var(--bone);padding:clamp(2.5rem,5vh,4rem) var(--pad-x) clamp(3rem,6vh,5rem);
+  min-height:100vh;overflow:hidden;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","Instrument Sans",Helvetica,Arial,sans-serif}
+.history::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(60% 55% at 50% 40%,rgba(201,169,106,.10),transparent 70%)}
+.history__grid{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.1fr) minmax(0,.8fr);gap:clamp(1.5rem,3vw,3rem);align-items:center;min-height:70vh}
+.history__kicker{display:flex;align-items:center;gap:.9rem;font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin:0 0 1.6rem}
+.history__kicker::before{content:"";width:2.4rem;height:1px;background:var(--gold)}
+.history__title{font-family:"Instrument Serif",Georgia,serif;font-weight:400;margin:0 0 1.6rem;line-height:1;letter-spacing:-.01em}
+.history__title .t1{display:block;font-size:clamp(2rem,3.6vw,3.4rem);font-style:italic;color:rgba(233,228,216,.9)}
+.history__title .t2{display:block;font-size:clamp(3.6rem,7.4vw,7.2rem);margin-top:.05em}
+.history__title .t2 em{font-style:normal;color:var(--gold)}
+.history__text{max-width:44ch;font-size:clamp(.92rem,1.02vw,1.02rem);line-height:1.7;color:rgba(233,228,216,.7);margin:0 0 2rem}
+.link-arrow{display:inline-flex;align-items:center;gap:.8rem;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--bone)}
+.link-arrow svg{width:34px;height:10px;transition:transform .6s var(--ease)}
+.link-arrow:hover svg{transform:translateX(6px)}
+.link-arrow:hover{color:var(--gold)}
+
+/* center bust with columns */
+.history__stage{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:clamp(24rem,64vh,44rem)}
+.history__halo{position:absolute;left:50%;top:48%;width:min(70%,26rem);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(201,169,106,.22),rgba(201,169,106,.05) 45%,transparent 70%);filter:blur(6px)}
+.history__ring{position:absolute;left:50%;top:48%;width:min(78%,29rem);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(233,228,216,.16)}
+.history__ring::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px dashed rgba(201,169,106,.22)}
+.history__bust{position:relative;z-index:2;width:min(88%,30rem);height:auto;display:block;filter:drop-shadow(0 40px 60px rgba(0,0,0,.7))}
+.history__col{position:absolute;bottom:-6%;width:clamp(3.4rem,6vw,6.2rem);height:auto;opacity:.55;filter:brightness(.6) drop-shadow(0 20px 40px rgba(0,0,0,.6))}
+.history__col--l{left:2%}.history__col--r{right:2%;transform:scaleX(-1)}
+
+/* right menu */
+.history__menu{list-style:none;margin:0;padding:0;justify-self:end;width:100%;max-width:18rem}
+.history__menu li{border-bottom:1px solid rgba(233,228,216,.14)}
+.history__menu a{position:relative;display:flex;justify-content:space-between;align-items:center;padding:1rem 0;font-size:.82rem;letter-spacing:.06em;color:rgba(233,228,216,.7);transition:color .4s,padding-left .5s var(--ease)}
+.history__menu a::after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+.history__menu a:hover,.history__menu a.is-active{color:var(--bone);padding-left:.6rem}
+.history__menu a:hover::after,.history__menu a.is-active::after{transform:scaleX(1)}
+.history__menu a span{font-size:.62rem;letter-spacing:.2em;color:var(--gold);opacity:0;transition:opacity .4s}
+.history__menu a:hover span,.history__menu a.is-active span{opacity:1}
+.history__browse{margin-top:1.8rem;justify-self:end}
+
+/* cards row */
+.history__cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(233,228,216,.1);margin-top:clamp(2.5rem,6vh,4.5rem);border:1px solid rgba(233,228,216,.1)}
+.card{position:relative;background:var(--ink);display:grid;grid-template-columns:auto 1fr;gap:1rem;padding:1.2rem;min-height:11rem;overflow:hidden;transition:background .5s}
+.card:hover{background:#131315}
+.card__num{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(2.6rem,4vw,4rem);line-height:.8;color:rgba(233,228,216,.22);transition:color .5s}
+.card:hover .card__num{color:var(--gold)}
+.card__img{position:absolute;inset:0;opacity:.22;background-size:cover;background-position:center;filter:grayscale(1) contrast(1.1);transition:opacity .6s,transform 1.2s var(--ease)}
+.card:hover .card__img{opacity:.38;transform:scale(1.05)}
+.card__body{position:relative;z-index:1;align-self:end}
+.card__body h3{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:1.2rem;margin:0 0 .4rem}
+.card__body p{margin:0;font-size:.78rem;line-height:1.55;color:rgba(233,228,216,.62)}
+.card__go{position:absolute;right:1rem;top:1rem;z-index:1;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);opacity:0;transform:translateX(-6px);transition:opacity .4s,transform .5s var(--ease)}
+.card:hover .card__go{opacity:1;transform:none}
+
+/* scroll reveal */
+.fx{opacity:0;transform:translateY(34px);transition:opacity 1s ease,transform 1.3s var(--ease)}
+.fx.in{opacity:1;transform:none}
+.fx.d1{transition-delay:.1s}.fx.d2{transition-delay:.2s}.fx.d3{transition-delay:.3s}.fx.d4{transition-delay:.4s}
+.history__bust.fx{transform:translateY(60px) scale(.96)}
+.history__bust.fx.in{transform:none}
+
+@media (max-width:1000px){
+  .history__grid{grid-template-columns:1fr;text-align:left}
+  .history__menu,.history__browse{justify-self:start;max-width:none}
+  .history__cards{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:600px){.history__cards{grid-template-columns:1fr}
+  .headline{font-size:clamp(1.9rem,9vw,2.6rem)}
+  .hero__aside p{display:none}
+  .hero__cta{gap:.8rem}
+  .btn-solid{padding:.8rem 1.2rem;font-size:.7rem}
+  .scrolltrack{height:540vh}
+  .hero__inner{padding-bottom:1.2rem}
+  .hero__content{align-items:end}
+}
+
+
+/* ============ SHARED SECTION BITS ============ */
+.sec{position:relative;background:var(--ink);color:var(--bone);padding:clamp(4.5rem,10vh,8rem) var(--pad-x);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","Instrument Sans",Helvetica,Arial,sans-serif;overflow:hidden}
+.sec+.sec::before,.history+.sec::before{content:"";position:absolute;left:var(--pad-x);right:var(--pad-x);top:0;height:1px;background:rgba(233,228,216,.1)}
+.kicker{display:flex;align-items:center;gap:.9rem;font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin:0 0 1.4rem}
+.kicker::before{content:"";width:2.4rem;height:1px;background:var(--gold)}
+.h2{font-family:"Instrument Serif",Georgia,serif;font-weight:400;margin:0;line-height:1;letter-spacing:-.01em;font-size:clamp(2.6rem,5.4vw,5.2rem)}
+.h2 em{font-style:italic;color:var(--gold)}
+.lead{max-width:48ch;font-size:clamp(.95rem,1.05vw,1.05rem);line-height:1.7;color:rgba(233,228,216,.7);margin:1.4rem 0 0}
+.sec__head{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;margin-bottom:clamp(2.5rem,6vh,4.5rem)}
+.num-roman{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(3rem,8vw,7rem);line-height:.8;color:rgba(233,228,216,.1)}
+
+/* ============ NETWORK ============ */
+.net{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(2rem,5vw,6rem);align-items:center}
+.net__visual{position:relative;aspect-ratio:1;max-width:36rem;margin:0 auto;width:100%}
+.net__img{position:absolute;inset:8%;border-radius:50%;background:url("assets/gen-network.jpg") center/cover;
+  -webkit-mask:radial-gradient(circle,#000 55%,transparent 72%);mask:radial-gradient(circle,#000 55%,transparent 72%)}
+.orbit{position:absolute;left:50%;top:50%;border-radius:50%;border:1px solid rgba(233,228,216,.14);transform:translate(-50%,-50%)}
+.orbit--1{width:78%;height:78%;animation:spin 60s linear infinite}
+.orbit--2{width:96%;height:96%;border-style:dashed;border-color:rgba(201,169,106,.28);animation:spin 90s linear infinite reverse}
+.orbit i{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px rgba(201,169,106,.15),0 0 18px rgba(201,169,106,.6)}
+.orbit--1 i{left:50%;top:-4px;margin-left:-4px}
+.orbit--2 i:nth-child(1){left:-4px;top:50%;margin-top:-4px}
+.orbit--2 i:nth-child(2){right:-4px;top:50%;margin-top:-4px;background:var(--bone);box-shadow:0 0 0 6px rgba(233,228,216,.12)}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(233,228,216,.1);border:1px solid rgba(233,228,216,.1);margin-top:2.4rem}
+.stat{background:var(--ink);padding:1.4rem 1.5rem}
+.stat b{display:block;font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(2.2rem,3.6vw,3.4rem);line-height:1;color:var(--bone)}
+.stat b small{font-size:.5em;color:var(--gold);margin-left:.15em}
+.stat span{display:block;margin-top:.5rem;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(233,228,216,.5)}
+.regions{list-style:none;margin:2rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.6rem}
+.regions li{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;padding:.5rem .9rem;border:1px solid rgba(233,228,216,.18);border-radius:999px;color:rgba(233,228,216,.75);transition:border-color .4s,color .4s}
+.regions li:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ============ SECURITY ============ */
+.sec--security{background:#0e0e10}
+.secgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(2rem,5vw,6rem);align-items:stretch}
+.sec__img{position:relative;min-height:26rem;border:1px solid rgba(233,228,216,.12);overflow:hidden}
+.sec__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 2s var(--ease)}
+.sec__img:hover img{transform:scale(1)}
+.sec__img figcaption{position:absolute;left:1.2rem;bottom:1.1rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(233,228,216,.7)}
+.acc{margin:0;padding:0;list-style:none;border-top:1px solid rgba(233,228,216,.12)}
+.acc li{border-bottom:1px solid rgba(233,228,216,.12)}
+.acc button{width:100%;display:grid;grid-template-columns:3rem 1fr auto;align-items:center;gap:1rem;padding:1.3rem 0;text-align:left;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(1.25rem,1.8vw,1.6rem);transition:color .4s}
+.acc button:hover,.acc li.is-open button{color:var(--gold)}
+.acc button .i{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;font-size:.66rem;letter-spacing:.26em;color:var(--gold)}
+.acc button .plus{position:relative;width:14px;height:14px}
+.acc button .plus::before,.acc button .plus::after{content:"";position:absolute;background:currentColor;left:0;top:6px;width:14px;height:1px;transition:transform .5s var(--ease)}
+.acc button .plus::after{transform:rotate(90deg)}
+.acc li.is-open .plus::after{transform:rotate(0)}
+.acc__body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--ease)}
+.acc li.is-open .acc__body{grid-template-rows:1fr}
+.acc__body>div{overflow:hidden}
+.acc__body p{margin:0 0 1.4rem 4rem;max-width:52ch;font-size:.92rem;line-height:1.7;color:rgba(233,228,216,.65)}
+
+/* ============ PRICING ============ */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;align-items:stretch}
+.plan{position:relative;border:1px solid rgba(233,228,216,.14);padding:2rem 1.8rem;display:flex;flex-direction:column;gap:1.2rem;background:var(--ink);transition:transform .8s var(--ease),border-color .5s}
+.plan:hover{transform:translateY(-6px);border-color:rgba(201,169,106,.6)}
+.plan--hero{border-color:var(--gold);background:linear-gradient(180deg,rgba(201,169,106,.08),transparent 60%)}
+.plan__tag{position:absolute;top:-.6rem;left:1.8rem;background:var(--gold);color:var(--ink);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;padding:.3rem .7rem}
+.plan h3{margin:0;font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:1.8rem}
+.plan .price{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(2.6rem,4vw,3.6rem);line-height:1}
+.plan .price small{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(233,228,216,.55);margin-left:.4rem}
+.plan .bill{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.plan ul{list-style:none;margin:.4rem 0 0;padding:0;display:grid;gap:.6rem;flex:1}
+.plan li{font-size:.9rem;color:rgba(233,228,216,.75);padding-left:1.4rem;position:relative}
+.plan li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:1px;background:var(--gold)}
+.btn-outline{display:inline-flex;justify-content:center;align-items:center;padding:.95rem 1.4rem;border:1px solid rgba(233,228,216,.35);border-radius:999px;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;transition:background .4s,color .4s,border-color .4s}
+.btn-outline:hover{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.plan--hero .btn-outline{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.plan--hero .btn-outline:hover{background:var(--bone);border-color:var(--bone)}
+.guarantee{margin-top:1.8rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(233,228,216,.45);text-align:center}
+
+/* ============ TESTIMONIAL BAND ============ */
+.sec--quote{padding:0;min-height:60vh;display:grid;place-items:center;text-align:center}
+.sec--quote .bg{position:absolute;inset:0;background:url("assets/gen-laurel.jpg") center/cover;opacity:.35}
+.sec--quote .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,transparent,var(--ink) 90%)}
+.quote{position:relative;padding:clamp(4rem,10vh,8rem) var(--pad-x);max-width:52rem}
+.quote p{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(1.6rem,3.2vw,2.8rem);line-height:1.25;margin:0}
+.quote p em{color:var(--gold)}
+.quote cite{display:block;margin-top:1.6rem;font-style:normal;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(233,228,216,.55)}
+
+/* ============ DOWNLOAD ============ */
+.dl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,6rem);align-items:center}
+.platforms{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(233,228,216,.1);border:1px solid rgba(233,228,216,.1)}
+.platform{background:var(--ink);padding:1.6rem 1rem;display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center;transition:background .4s}
+.platform:hover{background:#151517}
+.platform svg{width:26px;height:26px;stroke:var(--bone);fill:none;stroke-width:1.2}
+.platform span{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(233,228,216,.75)}
+.platform:hover span{color:var(--gold)}
+.dl__cta{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;margin-top:2rem}
+
+/* ============ FOOTER ============ */
+.foot{background:var(--ink);color:var(--bone);padding:clamp(3rem,8vh,6rem) var(--pad-x) 2rem;border-top:1px solid rgba(233,228,216,.12);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","Instrument Sans",Helvetica,Arial,sans-serif;position:relative;overflow:hidden}
+.foot__word{font-family:"UnifrakturCook",serif;font-weight:700;font-size:clamp(4rem,17vw,18rem);line-height:.8;color:rgba(233,228,216,.06);text-align:center;letter-spacing:-.01em;user-select:none;margin:0 0 -.1em;white-space:nowrap}
+.foot__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-top:2rem}
+.foot h4{margin:0 0 1rem;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
+.foot li a{font-size:.9rem;color:rgba(233,228,216,.7);transition:color .3s}
+.foot li a:hover{color:var(--bone)}
+.foot__brand .logo{margin-bottom:1rem}
+.foot__brand p{max-width:34ch;font-size:.88rem;line-height:1.6;color:rgba(233,228,216,.6);margin:0 0 1.4rem}
+.newsletter{display:flex;border-bottom:1px solid rgba(233,228,216,.3);max-width:22rem}
+.newsletter input{flex:1;background:none;border:0;color:var(--bone);font:inherit;font-size:.9rem;padding:.7rem 0;outline:0}
+.newsletter input::placeholder{color:rgba(233,228,216,.4)}
+.newsletter button{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.foot__bar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:3rem;padding-top:1.4rem;border-top:1px solid rgba(233,228,216,.1);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(233,228,216,.45)}
+
+@media (max-width:900px){
+  .net,.secgrid,.dl{grid-template-columns:1fr}
+  .plans{grid-template-columns:1fr}
+  .foot__grid{grid-template-columns:1fr 1fr}
+  .sec__head{grid-template-columns:1fr}
+  .num-roman{display:none}
+  .acc__body p{margin-left:0}
+}
+
+/* ============ MOBILE MENU ============ */
+.menu{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;justify-content:center;padding:0 var(--pad-x);
+  background:rgba(11,11,12,.92);color:var(--bone);
+  backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
+  clip-path:inset(0 0 100% 0);visibility:hidden;
+  transition:clip-path .85s var(--ease-in-out),visibility 0s linear .85s}
+.menu__close{position:absolute;top:clamp(.7rem,1.6vh,1.1rem);right:var(--pad-x);width:48px;height:48px;background:none;border:0;color:var(--bone);cursor:pointer;z-index:2;transition:color .3s,transform .5s var(--ease)}
+.menu__close span{position:absolute;left:14px;right:14px;top:50%;height:1.5px;background:currentColor}
+.menu__close span:first-child{transform:rotate(45deg)}.menu__close span:last-child{transform:rotate(-45deg)}
+.menu__close:hover{color:var(--gold);transform:rotate(90deg)}
+.menu.is-open{clip-path:inset(0 0 0 0);visibility:visible;transition:clip-path .85s var(--ease-in-out),visibility 0s linear 0s}
+.menu__list{list-style:none;margin:0;padding:0}
+.menu__list li{overflow:hidden}
+.menu__list a{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(2.35rem,12vw,3.4rem);line-height:1.22;padding:.12em 0;display:block;
+  transform:translateY(115%);opacity:0;transition:transform .8s var(--ease),opacity .6s ease}
+.menu.is-open .menu__list a{transform:translateY(0);opacity:1}
+.menu.is-open .menu__list li:nth-child(1) a{transition-delay:.26s}
+.menu.is-open .menu__list li:nth-child(2) a{transition-delay:.33s}
+.menu.is-open .menu__list li:nth-child(3) a{transition-delay:.40s}
+.menu.is-open .menu__list li:nth-child(4) a{transition-delay:.47s}
+.menu__rule{height:1px;background:rgba(233,228,216,.16);margin:2.2rem 0 0;transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease)}
+.menu.is-open .menu__rule{transform:scaleX(1);transition-delay:.5s}
+.menu__foot{margin-top:2.2rem;opacity:0;transform:translateY(22px);transition:transform .8s var(--ease),opacity .6s ease}
+.menu.is-open .menu__foot{opacity:1;transform:translateY(0);transition-delay:.56s}
+.menu__foot .btn-play{display:inline-block;padding:.95rem 1.6rem;font-size:1rem;letter-spacing:.12em;text-transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms!important;animation:none!important}
+}
+@media (max-width:900px){
+  .nav__links,.nav .btn-play{display:none}
+  .burger{display:block}
+  .hero__content{grid-template-columns:1fr;gap:1rem}
+  .intro__logo{font-size:clamp(2.6rem,14vw,6rem)}
+  .hero__aside p{font-size:.9rem;margin-bottom:1rem;max-width:36ch}
+  .hero__word{font-size:clamp(4rem,22vw,12rem);top:clamp(3.6rem,10vh,6rem)}
+  .hero__meta{margin-top:1rem;padding-top:.8rem;font-size:.6rem}
+  .hero__meta{display:none}
+  .hero__aside{justify-self:start;max-width:40ch}
+  .headline{font-size:clamp(2.2rem,9vw,3.6rem)}
+  .hero__meta span:nth-child(3){display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="scrolltrack" id="scrolltrack">
+<section class="hero" id="hero">
+  <div class="hero__media" aria-hidden="true">
+    <canvas id="seq"></canvas>
+  </div>
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro__logo">Trojan VPN</div>
+    <div class="intro__sub">Privacy built like an empire</div>
+    <div class="intro__cue"><i></i>Scroll</div>
+  </div>
+  <div class="hero__shade" aria-hidden="true"></div>
+  <div class="hero__word" aria-hidden="true"><span>TROJAN</span></div>
+  <div class="hero__cutout" id="stage" aria-hidden="true">
+    <div class="stage__frame" id="stageFrame">
+      <svg class="stage__grid" id="gridSvg" width="100%" height="100%">
+        <defs><pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M 48 0 L 0 0 0 48" fill="none" stroke="#64748b" stroke-width="0.6"/></pattern></defs>
+        <rect width="100%" height="100%" fill="url(#grid)"/>
+      </svg>
+      <img class="stage__statue" id="statueBase" src="assets/statue1-cut.png?v=1789829587" alt="">
+      <div class="stage__reveal" id="revealLayer"></div>
+    </div>
+  </div>
+  <div class="hero__grain" aria-hidden="true"></div>
+  <div class="hero__dim" aria-hidden="true"></div>
+  <div class="hero__lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+  <header class="nav">
+    <a class="logo" href="index.html">Trojan VPN <small>MMXXVI</small></a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="servers.html">Servers</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="download.html">Download</a></li>
+      </ul>
+    </nav>
+    <div class="nav__right">
+      <a class="btn-play" href="pricing.html">Get Trojan</a>
+      <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="hero__inner">
+    <div class="hero__content">
+      <div>
+        <h1 class="headline">
+          <span class="line"><span>Privacy built</span></span>
+          <span class="line"><span>like an <em>empire.</em></span></span>
+          <span class="line"><span>Unbreached.</span></span>
+        </h1>
+      </div>
+      <div class="hero__aside">
+        <p class="reveal">Trojan VPN wraps your traffic in armour forged from modern encryption and ancient discipline. No logs, no borders, no watchers. Just you, moving unseen across the open network.</p>
+        <div class="hero__cta reveal">
+          <a class="btn-solid" href="pricing.html">Enter the gates
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 6h10M6.5 1.5 11 6l-4.5 4.5"/></svg>
+          </a>
+          <a class="link-plain" href="servers.html">See the network</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero__meta">
+      <div class="rule" aria-hidden="true"></div>
+      <span>AES-256 · WireGuard · Zero logs</span>
+      <span class="scroll-cue"><i></i>Scroll</span>
+      <span>94 cities · 41 nations</span>
+    </div>
+  </div>
+
+</section>
+</div>
+
+<section class="history" id="history">
+  <div class="history__grid">
+    <div>
+      <p class="history__kicker fx">Chapter II</p>
+      <h2 class="history__title">
+        <span class="t1 fx d1">Built on the</span>
+        <span class="t2 fx d2">Rome <em>of privacy</em></span>
+      </h2>
+      <p class="history__text fx d3">Rome held for a thousand years because its walls were never the point. Its roads, its couriers and its sealed dispatches were. Trojan VPN is the modern legion for your traffic: encrypted tunnels, no records kept, every route guarded from the first mile to the last.</p>
+      <a class="link-arrow fx d4" href="about.html">Continue reading
+        <svg viewBox="0 0 34 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 5h32M28 1l4 4-4 4"/></svg>
+      </a>
+    </div>
+
+    <div class="history__stage">
+      <div class="history__halo" aria-hidden="true"></div>
+      <div class="history__ring" aria-hidden="true"></div>
+      <img class="history__col history__col--l" src="assets/column.png" alt="" aria-hidden="true">
+      <img class="history__col history__col--r" src="assets/column.png" alt="" aria-hidden="true">
+      <img class="history__bust fx d1" src="assets/bust-gold.png" alt="Marble bust split with gold, the Trojan emblem">
+    </div>
+
+    <div>
+      <ul class="history__menu">
+        <li class="fx"><a href="security.html">Encrypted tunnels<span>01</span></a></li>
+        <li class="fx d1"><a href="security.html" class="is-active">Zero log policy<span>02</span></a></li>
+        <li class="fx d2"><a href="servers.html">Global legion of servers<span>03</span></a></li>
+        <li class="fx d3"><a href="security.html">Kill switch<span>04</span></a></li>
+        <li class="fx d4"><a href="security.html">Split tunnelling<span>05</span></a></li>
+        <li class="fx d4"><a href="audits.html">Open source audits<span>06</span></a></li>
+      </ul>
+      <a class="link-arrow history__browse fx d4" href="security.html">Browse all
+        <svg viewBox="0 0 34 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 5h32M28 1l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="history__cards">
+    <a class="card fx" href="security.html">
+      <div class="card__img" style="background-image:url('assets/caesar.jpg')"></div>
+      <div class="card__num">01</div>
+      <div class="card__body"><h3>The Cipher</h3><p>AES-256 and WireGuard. The same grade of encryption trusted by states, wrapped around every packet you send.</p></div>
+      <span class="card__go">Explore</span>
+    </a>
+    <a class="card fx d1" href="servers.html">
+      <div class="card__img" style="background-image:url('assets/back.jpg')"></div>
+      <div class="card__num">02</div>
+      <div class="card__body"><h3>The Legion</h3><p>Servers across 41 nations, running from RAM only. Nothing written, nothing left behind when the power drops.</p></div>
+      <span class="card__go">Explore</span>
+    </a>
+    <a class="card fx d2" href="security.html">
+      <div class="card__img" style="background-image:url('assets/venus.jpg')"></div>
+      <div class="card__num">03</div>
+      <div class="card__body"><h3>The Veil</h3><p>Obfuscated traffic that looks like ordinary browsing, so restrictive networks never see a VPN at all.</p></div>
+      <span class="card__go">Explore</span>
+    </a>
+    <a class="card fx d3" href="audits.html">
+      <div class="card__img" style="background-image:url('assets/statue-bust.png')"></div>
+      <div class="card__num">04</div>
+      <div class="card__body"><h3>The Oath</h3><p>No logs, independently audited. A promise carved in stone, not written in a policy nobody reads.</p></div>
+      <span class="card__go">Explore</span>
+    </a>
+  </div>
+</section>
+
+<section class="sec" id="servers">
+  <div class="sec__head">
+    <div><p class="kicker fx">Chapter III</p><h2 class="h2 fx d1">A legion of servers,<br><em>stationed everywhere.</em></h2></div>
+    <div class="num-roman fx d2">III</div>
+  </div>
+  <div class="net">
+    <div class="net__visual fx">
+      <div class="net__img"></div>
+      <div class="orbit orbit--1"><i></i></div>
+      <div class="orbit orbit--2"><i></i><i></i></div>
+    </div>
+    <div>
+      <p class="lead fx d1">Rome's couriers changed horses every few miles so a message never slowed down. Our network works the same way. Thousands of RAM-only servers hand your traffic along the fastest guarded road, with no diaries kept at any station.</p>
+      <div class="stats">
+        <div class="stat fx d1"><b data-count="3200">0<small>+</small></b><span>Servers</span></div>
+        <div class="stat fx d2"><b data-count="94">0</b><span>Cities</span></div>
+        <div class="stat fx d3"><b data-count="41">0</b><span>Nations</span></div>
+        <div class="stat fx d4"><b data-count="10">0<small>Gbps</small></b><span>Per node uplink</span></div>
+      </div>
+      <ul class="regions fx d4">
+        <li>Mumbai</li><li>Chennai</li><li>Singapore</li><li>Frankfurt</li><li>London</li><li>Roma</li><li>New York</li><li>Tokyo</li><li>Sydney</li><li>Dubai</li><li>Sao Paulo</li><li>Toronto</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--security" id="security">
+  <div class="sec__head">
+    <div><p class="kicker fx">Chapter IV</p><h2 class="h2 fx d1">Walls that hold.<br><em>Secrets that stay.</em></h2></div>
+    <div class="num-roman fx d2">IV</div>
+  </div>
+  <div class="secgrid">
+    <figure class="sec__img fx" style="margin:0"><img src="assets/gen-shield.jpg" alt="Marble hand holding a black and gold shield"><figcaption>Fig. 04, The Shield</figcaption></figure>
+    <ul class="acc fx d1" id="acc">
+      <li class="is-open"><button type="button" aria-expanded="true"><span class="i">01</span>AES-256 and WireGuard<span class="plus"></span></button>
+        <div class="acc__body"><div><p>Every session is sealed with AES-256-GCM or ChaCha20 over WireGuard, the same ciphers relied on by governments and banks. Keys rotate automatically and never touch a disk.</p></div></div></li>
+      <li><button type="button" aria-expanded="false"><span class="i">02</span>Strict no log policy<span class="plus"></span></button>
+        <div class="acc__body"><div><p>We do not record what you visit, when you connect, or from where. Our servers run entirely from memory and are wiped on every reboot. The claim is verified by independent third party audits.</p></div></div></li>
+      <li><button type="button" aria-expanded="false"><span class="i">03</span>Kill switch and leak guard<span class="plus"></span></button>
+        <div class="acc__body"><div><p>If the tunnel ever falters, the gates close. All traffic is blocked at the system level until the connection is restored, and DNS, IPv6 and WebRTC leaks are sealed by default.</p></div></div></li>
+      <li><button type="button" aria-expanded="false"><span class="i">04</span>Obfuscated Trojan protocol<span class="plus"></span></button>
+        <div class="acc__body"><div><p>Our namesake. Traffic is wrapped to look like everyday HTTPS, so restrictive networks and deep packet inspection see nothing but ordinary browsing. Inside, the legion moves unseen.</p></div></div></li>
+      <li><button type="button" aria-expanded="false"><span class="i">05</span>Open source, openly audited<span class="plus"></span></button>
+        <div class="acc__body"><div><p>Our apps and protocol implementation are public. Anyone may read them, and professionals are paid to break them. Reports are published in full, including what we got wrong.</p></div></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="pricing">
+  <div class="sec__head">
+    <div><p class="kicker fx">Chapter V</p><h2 class="h2 fx d1">Tribute worthy<br><em>of an empire.</em></h2></div>
+    <div class="num-roman fx d2">V</div>
+  </div>
+  <div class="plans">
+    <div class="plan fx">
+      <h3>Citizen</h3>
+      <div class="price">$9.99<small>/ month</small></div>
+      <div class="bill">Billed monthly</div>
+      <ul><li>All 3,200+ servers</li><li>5 devices at once</li><li>AES-256 and WireGuard</li><li>Kill switch</li><li>24/7 support</li></ul>
+      <a class="btn-outline" href="pricing.html">Choose Citizen</a>
+    </div>
+    <div class="plan plan--hero fx d1">
+      <span class="plan__tag">Most chosen</span>
+      <h3>Senator</h3>
+      <div class="price">$3.49<small>/ month</small></div>
+      <div class="bill">Billed $83.76 every 2 years</div>
+      <ul><li>Everything in Citizen</li><li>10 devices at once</li><li>Obfuscated Trojan protocol</li><li>Dedicated IP add on</li><li>Priority support</li><li>Save 65 percent</li></ul>
+      <a class="btn-outline" href="pricing.html">Choose Senator</a>
+    </div>
+    <div class="plan fx d2">
+      <h3>Emperor</h3>
+      <div class="price">$5.99<small>/ month</small></div>
+      <div class="bill">Billed $71.88 yearly</div>
+      <ul><li>Everything in Senator</li><li>Unlimited devices</li><li>Encrypted password vault</li><li>Breach monitoring</li><li>Family sharing for 6</li></ul>
+      <a class="btn-outline" href="pricing.html">Choose Emperor</a>
+    </div>
+  </div>
+  <p class="guarantee fx d3">30 day money back guarantee. No questions, no records.</p>
+</section>
+
+<section class="sec sec--quote">
+  <div class="bg" aria-hidden="true"></div>
+  <blockquote class="quote fx" style="margin:0">
+    <p>"I had used three VPNs before this. Trojan is the first one that felt less like a product and more like <em>a promise kept.</em>"</p>
+    <cite>Aarav M., Hyderabad. Senator plan since 2024</cite>
+  </blockquote>
+</section>
+
+<section class="sec" id="download">
+  <div class="sec__head">
+    <div><p class="kicker fx">Chapter VI</p><h2 class="h2 fx d1">Enter the gates<br><em>on every device.</em></h2></div>
+    <div class="num-roman fx d2">VI</div>
+  </div>
+  <div class="dl">
+    <div>
+      <p class="lead fx" style="margin-top:0">One account, every gate. Native apps for every platform you own, plus browser extensions and router firmware for the whole household. Sign in once and the legion follows you.</p>
+      <div class="dl__cta fx d1">
+        <a class="btn-solid" href="download.html">Download Trojan
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 6h10M6.5 1.5 11 6l-4.5 4.5"/></svg></a>
+        <a class="link-plain" href="download.html">Set up on a router</a>
+      </div>
+    </div>
+    <div class="platforms fx d2">
+      <a class="platform" href="download.html"><svg viewBox="0 0 24 24"><path d="M16.5 3c.1 1.4-.5 2.6-1.4 3.5-.9.9-2.2 1.4-3.4 1.3-.1-1.3.5-2.6 1.4-3.5C14 3.4 15.3 2.9 16.5 3zM19.8 17.3c-.6 1.4-1.4 2.7-2.5 3.7-.8.7-1.7.9-2.7.5-.9-.4-1.8-.4-2.8 0-1 .4-1.9.3-2.7-.5-2.6-2.5-4.1-7.7-1.6-11 1.1-1.5 3-2 4.4-1.4.9.4 1.7.4 2.6 0 1.7-.7 3.5-.2 4.6 1.3-2.8 1.8-2.3 5.6.7 7.4z"/></svg><span>macOS</span></a>
+      <a class="platform" href="download.html"><svg viewBox="0 0 24 24"><path d="M3 5.5 11 4.4v7.1H3zM12 4.2 21 3v8.5h-9zM3 12.5h8v7.1L3 18.5zM12 12.5h9V21l-9-1.2z"/></svg><span>Windows</span></a>
+      <a class="platform" href="download.html"><svg viewBox="0 0 24 24"><path d="M6 9.5a6 6 0 0 1 12 0V17H6zM6 17h12M4 10l2-1M20 10l-2-1M8 3l1.5 2.5M16 3l-1.5 2.5"/></svg><span>Android</span></a>
+      <a class="platform" href="download.html"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></svg><span>iOS</span></a>
+      <a class="platform" href="download.html"><svg viewBox="0 0 24 24"><path d="M12 3c-3 0-4.5 2.5-4.5 5.5 0 2-1.5 3.5-2.5 5.5-.8 1.7 0 3.5 1.5 4.5 1.3.8 2.5.3 3.5-.5h4c1 .8 2.2 1.3 3.5.5 1.5-1 2.3-2.8 1.5-4.5-1-2-2.5-3.5-2.5-5.5C16.5 5.5 15 3 12 3z"/></svg><span>Linux</span></a>
+      <a class="platform" href="download.html"><svg viewBox="0 0 24 24"><rect x="3" y="14" width="18" height="6" rx="1"/><path d="M7 14V9M12 14V4M17 14V9M6.5 17h.01M9.5 17h.01"/></svg><span>Router</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot__word" aria-hidden="true">Trojan</div>
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <a class="logo" href="index.html">Trojan VPN <small>MMXXVI</small></a>
+      <p>Privacy built like an empire. Ancient discipline, modern encryption, and a promise carved in stone: we keep nothing.</p>
+      <form class="newsletter" onsubmit="return false"><input type="email" placeholder="Your email for dispatches" aria-label="Email"><button type="submit">Join</button></form>
+    </div>
+    <div><h4>Product</h4><ul><li><a href="servers.html">Servers</a></li><li><a href="security.html">Security</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="download.html">Download</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="audits.html">Audits</a></li><li><a href="transparency.html">Transparency report</a></li><li><a href="careers.html">Careers</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy policy</a></li><li><a href="terms.html">Terms</a></li><li><a href="canary.html">Warrant canary</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="foot__bar"><span>Trojan VPN, MMXXVI. All rights reserved.</span><span>Roma. Mumbai. New York.</span></div>
+</footer>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <button class="menu__close" type="button" aria-label="Close menu"><span></span><span></span></button>
+  <ul class="menu__list">
+    <li><a href="servers.html">Servers</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="security.html">Security</a></li>
+    <li><a href="download.html">Download</a></li>
+  </ul>
+  <div class="menu__rule"></div>
+  <div class="menu__foot"><a class="btn-play" href="pricing.html">Get Trojan VPN</a></div>
+</div>
+
+<script>
+(function(){
+  var hero=document.getElementById('hero');
+  var nav=document.querySelector('.nav');
+  var revealed=false;
+  var track=document.getElementById('scrolltrack');
+  var intro=document.getElementById('intro');
+
+  /* ===== Frame sequence scrubbed by scroll ===== */
+  var N=48, frames=[], loaded=0, cur=-1;
+  var cvs=document.getElementById('seq'), c2=cvs.getContext('2d',{alpha:false});
+  var FW=1600, FH=900;
+  function sizeSeq(){
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    cvs.width=Math.round(hero.clientWidth*dpr); cvs.height=Math.round(hero.clientHeight*dpr);
+    cur=-1; draw();
+  }
+  function draw(){
+    var i=Math.max(0,Math.min(N-1,Math.round(progress()*(N-1))));
+    var img=frames[i];
+    if(!img||!img.complete||!img.naturalWidth){ /* nearest loaded frame */
+      for(var d=1;d<N;d++){ var a=frames[i-d],b=frames[i+d]; if(a&&a.complete&&a.naturalWidth){img=a;break;} if(b&&b.complete&&b.naturalWidth){img=b;break;} }
+      if(!img) return;
+    }
+    if(img===frames[cur]) return; cur=frames.indexOf(img);
+    var W=cvs.width,H=cvs.height, sc=Math.max(W/FW,H/FH), w=FW*sc,h=FH*sc;
+    c2.drawImage(img,(W-w)/2,(H-h)/2,w,h);
+  }
+  /* scroll progress 0..1 across the track; the last 12% of the track holds the final frame */
+  function progress(){
+    var r=track.getBoundingClientRect(); var total=r.height-window.innerHeight;
+    var y=Math.min(Math.max(-r.top,0),total);
+    return Math.min(1, y/(total*0.55));
+  }
+  function setReveal(on){
+    if(on===revealed) return; revealed=on;
+    hero.classList.toggle('is-revealed',on);
+    hero.style.transform='';
+  }
+  function onSeq(){
+    var p=progress(); draw();
+    /* intro logo fades over the first 18% of scroll */
+    var k=Math.min(1,p/0.18); intro.style.opacity=(1-k).toFixed(3); intro.style.transform='translateY('+(-k*40)+'px)';
+    /* reveal the statue, wordmark and copy once the last frame is reached */
+    setReveal(p>=0.999);
+  }
+  /* preload: first frame immediately, then the rest in order */
+  for(var i=0;i<N;i++){ frames[i]=new Image(); }
+  function loadFrom(i){
+    if(i>=N) return;
+    frames[i].onload=function(){ loaded++; if(i===0||i===N-1) { cur=-1; draw(); } loadFrom(i+1); };
+    frames[i].onerror=function(){ loadFrom(i+1); };
+    frames[i].src='assets/frames/f'+(i<10?'0'+i:i)+'.jpg';
+  }
+  loadFrom(0);
+  /* also fetch the last frame early so the reveal never waits */
+  frames[N-1].src='assets/frames/f47.jpg';
+  window.addEventListener('scroll',onSeq,{passive:true});
+  window.addEventListener('resize',function(){ sizeSeq(); onSeq(); });
+  sizeSeq(); onSeq();
+
+  /* Hero dims progressively as you scroll; fully dark by one viewport. */
+  var dim=document.querySelector('.hero__dim');
+  function onScroll(){
+    /* dim only during the last stretch of the track, after the statue has been revealed */
+    var r=track.getBoundingClientRect(); var total=r.height-window.innerHeight;
+    var y=Math.min(Math.max(-r.top,0),total);
+    var startAt=total*0.72; var t=Math.min(1,Math.max(0,(y-startAt)/(total-startAt)));
+    dim.style.opacity=(t*t*0.82).toFixed(3);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  /* #statue deep link (logo on subpages): land on the revealed hero, statue already down */
+  function jumpToStatue(){
+    var total=track.offsetHeight-window.innerHeight;
+    window.scrollTo(0, track.offsetTop + Math.round(total*0.58));
+    history.replaceState(null,'',location.pathname);
+  }
+  if(location.hash==='#statue'){ if('scrollRestoration' in history) history.scrollRestoration='manual'; jumpToStatue(); setTimeout(jumpToStatue,50); }
+
+  /* Section reveals */
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{threshold:.15});
+  document.querySelectorAll('.fx').forEach(function(el){ io.observe(el); });
+
+  /* Accordion */
+  document.querySelectorAll('#acc > li > button').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var li=btn.parentElement, open=li.classList.contains('is-open');
+      document.querySelectorAll('#acc > li').forEach(function(x){ x.classList.remove('is-open'); x.querySelector('button').setAttribute('aria-expanded','false'); });
+      if(!open){ li.classList.add('is-open'); btn.setAttribute('aria-expanded','true'); }
+    });
+  });
+
+  /* Count up stats */
+  var cio=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting) return; cio.unobserve(e.target);
+    var el=e.target, target=+el.getAttribute('data-count'), small=el.querySelector('small'), t0=null;
+    function step(ts){ if(!t0) t0=ts; var k=Math.min(1,(ts-t0)/1600); k=1-Math.pow(1-k,3);
+      el.firstChild.nodeValue=Math.round(target*k).toLocaleString(); if(k<1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  });},{threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(function(el){ cio.observe(el); });
+
+  /* Smooth anchor scroll */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){ var id=a.getAttribute('href'); if(id.length>1){ var t=document.querySelector(id); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); } } });
+  });
+
+  /* ===== Stage: lock the statue cutout to the exact position of the statue in the frozen video frame ===== */
+  var SPOTLIGHT_R=260, GRID_CELL=48, VW=1920, VH=1080;
+  var frameEl=document.getElementById('stageFrame');
+  var revealEl=document.getElementById('revealLayer'), gridSvg=document.getElementById('gridSvg');
+  function fitFrame(){
+    var W=hero.clientWidth, H=hero.clientHeight, sc=Math.max(W/VW,H/VH);
+    var w=VW*sc, h=VH*sc;
+    frameEl.style.left=((W-w)/2)+'px'; frameEl.style.top=((H-h)/2)+'px'; frameEl.style.width=w+'px'; frameEl.style.height=h+'px';
+  }
+  fitFrame(); window.addEventListener('resize',fitFrame);
+
+  /* ===== Spotlight reveal =====
+     Same radial gradient and stops as the canvas spec, but expressed as a CSS mask so there is no
+     per-frame PNG encoding. Only two numbers change per frame (the spot centre), so it runs at 60fps. */
+  var mouse={x:null,y:null}, smooth={x:0,y:0}, gridOffset={x:0,y:0}, haveMouse=false;
+  hero.addEventListener('mousemove',function(e){
+    mouse.x=e.clientX; mouse.y=e.clientY;
+    if(!haveMouse){ smooth.x=mouse.x; smooth.y=mouse.y; haveMouse=true; }
+  },{passive:true});
+  hero.addEventListener('touchmove',function(e){ var t=e.touches[0]; mouse.x=t.clientX; mouse.y=t.clientY; if(!haveMouse){smooth.x=mouse.x;smooth.y=mouse.y;haveMouse=true;} },{passive:true});
+  hero.addEventListener('mouseleave',function(){ mouse.x=null; mouse.y=null; });
+
+  function frame(){
+    if(revealed){
+      var tx=mouse.x!==null?mouse.x:smooth.x, ty=mouse.y!==null?mouse.y:smooth.y;
+      smooth.x+=(tx-smooth.x)*0.1; smooth.y+=(ty-smooth.y)*0.1;
+      var rect=hero.getBoundingClientRect();
+      var ncx=mouse.x===null?0:(smooth.x-rect.left)/rect.width-0.5;
+      var ncy=mouse.y===null?0:(smooth.y-rect.top)/rect.height-0.5;
+      gridOffset.x+=(ncx*16-gridOffset.x)*0.06; gridOffset.y+=(ncy*16-gridOffset.y)*0.06;
+      gridSvg.style.transform='translate3d('+gridOffset.x.toFixed(2)+'px,'+gridOffset.y.toFixed(2)+'px,0)';
+      if(haveMouse){
+        var rb=revealEl.getBoundingClientRect();
+        revealEl.style.setProperty('--sx',(smooth.x-rb.left).toFixed(1)+'px');
+        revealEl.style.setProperty('--sy',(smooth.y-rb.top).toFixed(1)+'px');
+      }
+      revealEl.style.opacity=(mouse.x===null||!haveMouse)?'0':'1';
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  /* Mobile menu */
+  var burger=document.querySelector('.burger');
+  var menu=document.getElementById('menu');
+  function setMenu(open){
+    menu.classList.toggle('is-open',open);
+    menu.setAttribute('aria-hidden',String(!open));
+    burger.setAttribute('aria-expanded',String(open));
+    burger.setAttribute('aria-label',open?'Close menu':'Open menu');
+    document.body.classList.toggle('menu-open',open);
+  }
+  burger.addEventListener('click',function(){ setMenu(!menu.classList.contains('is-open')); });
+  menu.querySelector('.menu__close').addEventListener('click',function(){ setMenu(false); });
+  menu.addEventListener('click',function(e){ if(e.target===menu) setMenu(false); });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ setMenu(false); }); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') setMenu(false); });
+})();
+</script>
+</body>
+</html>

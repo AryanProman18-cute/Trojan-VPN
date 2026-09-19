@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security | Trojan VPN</title><meta name="description" content="How Trojan VPN protects you: AES-256, WireGuard, RAM-only servers, kill switch and the obfuscated Trojan protocol.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=UnifrakturCook:wght@700&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="site.css"></head>
+<body>
+<header class="nav">
+  <a class="logo" href="index.html#statue">Trojan VPN <small>MMXXVI</small></a>
+  <nav aria-label="Primary"><ul class="nav__links"><li><a href="index.html#statue">Home</a></li><li><a href="servers.html">Servers</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="security.html" aria-current="page">Security</a></li><li><a href="download.html">Download</a></li></ul></nav>
+  <div class="nav__right"><a class="btn-play" href="pricing.html">Get Trojan</a>
+  <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button></div>
+</header>
+<main>
+<section class="phero">
+  <div class="phero__bg" style="background-image:url('assets/gen-shield.jpg')"></div><div class="phero__shade"></div>
+  <div class="phero__word" aria-hidden="true">IV</div>
+  <div class="phero__row"><div>
+    <p class="crumb fx"><a href="index.html">Trojan</a><span>Security</span></p>
+    <h1 class="fx d1">Walls that hold.<br><em>Secrets that stay.</em></h1>
+    <p class="fx d2">The Trojan horse worked because the walls of Troy were perfect and the gate was not. We built the gate first.</p>
+  </div><div class="phero__meta fx d2"><div><b>AES-256</b><br>Cipher</div><div><b>WireGuard</b><br>Protocol</div><div><b>None</b><br>Logs</div></div></div>
+</section><section class="sec"><div class="sec__head"><div><p class="kicker fx">The armour</p><h2 class="h2 fx d1">Five layers between<br>you and <em>the watchers.</em></h2></div><div class="num-roman fx d2">IV</div></div>
+ <div class="grid3">
+  <div class="tile fx"><span class="tile__num">I</span><h3>AES-256-GCM and ChaCha20</h3><p>State-grade ciphers over WireGuard, with perfect forward secrecy. Keys rotate hourly and never touch a disk.</p></div>
+  <div class="tile fx d1"><span class="tile__num">II</span><h3>Strict no log policy</h3><p>No browsing history, no connection timestamps, no source IPs, no bandwidth per user. Verified by independent audit.</p></div>
+  <div class="tile fx d2"><span class="tile__num">III</span><h3>Kill switch and leak guard</h3><p>If the tunnel falters the gates close. Traffic is blocked at the system level. DNS, IPv6 and WebRTC leaks sealed by default.</p></div>
+  <div class="tile fx d3"><span class="tile__num">IV</span><h3>Obfuscated Trojan protocol</h3><p>Our namesake. Traffic is wrapped to look like ordinary HTTPS so deep packet inspection sees nothing but browsing.</p></div>
+  <div class="tile fx d4"><span class="tile__num">V</span><h3>Open source, openly audited</h3><p>Apps and protocol are public. Professionals are paid to break them and reports are published in full.</p></div>
+  <div class="tile fx d4"><span class="tile__num">VI</span><h3>Private DNS</h3><p>Every query resolves on our own encrypted resolvers inside the tunnel. Nothing leaves in the clear.</p></div>
+ </div></section>
+ <section class="sec sec--alt"><div class="split">
+  <div><p class="kicker fx">The Trojan protocol</p><h2 class="h2 fx d1">Hidden in<br><em>plain sight.</em></h2>
+  <p class="lead fx d2">Most VPNs are easy to spot on the wire, which is why restrictive networks block them. Trojan wraps WireGuard inside a TLS session that is indistinguishable from a visit to any ordinary website. The censor sees traffic to a web server. Inside, the legion moves.</p>
+  <div class="cta-row fx d3"><a class="btn-solid" href="audits.html">Read the audits <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 6h10M6.5 1.5 11 6l-4.5 4.5"/></svg></a><a class="link-plain" href="https://github.com" target="_blank" rel="noopener">Source code</a></div></div>
+  <ul class="acc fx d1">
+   <li class="is-open"><button type="button" aria-expanded="true"><span class="i">01</span>What exactly do you not log?<span class="plus"></span></button><div class="acc__body"><div><p>Your real IP, the servers you connect to, timestamps, DNS queries, the sites you visit, and per-user bandwidth. We keep aggregate load per server, nothing tied to a person.</p></div></div></li>
+   <li><button type="button" aria-expanded="false"><span class="i">02</span>What happens if a server is seized?<span class="plus"></span></button><div class="acc__body"><div><p>It powers off. Because it runs from RAM with no disk, the seizing party receives a blank machine. This has happened once, in 2024, and we published the outcome in the transparency report.</p></div></div></li>
+   <li><button type="button" aria-expanded="false"><span class="i">03</span>Do you use RAM-only servers everywhere?<span class="plus"></span></button><div class="acc__body"><div><p>Yes. Every node in all 94 cities boots from a signed read-only image and mounts no persistent storage.</p></div></div></li>
+   <li><button type="button" aria-expanded="false"><span class="i">04</span>Where is Trojan based?<span class="plus"></span></button><div class="acc__body"><div><p>Trojan Privacy AG is incorporated in Zurich, Switzerland, outside the Five Eyes and Fourteen Eyes agreements and with no mandatory data retention law for VPNs.</p></div></div></li>
+   <li><button type="button" aria-expanded="false"><span class="i">05</span>Is the code really open?<span class="plus"></span></button><div class="acc__body"><div><p>All client apps and the protocol implementation are on GitHub under the GPL. Server orchestration is private for operational security but is in scope for every audit.</p></div></div></li>
+  </ul>
+ </div></section>
+ <section class="sec"><div class="split split--rev">
+  <figure class="fig fx"><img src="assets/gen-helmet.jpg" alt="Marble legionary helmet"><figcaption>Fig. 02, The Helmet</figcaption></figure>
+  <div><p class="kicker fx">Threat model</p><h2 class="h2 fx d1">Who we<br><em>defend against.</em></h2>
+  <ul class="list fx d2" style="margin-top:2rem">
+   <li><span class="i">A</span><span class="t">Your ISP and mobile carrier</span><span class="r">Sees only a tunnel</span></li>
+   <li><span class="i">B</span><span class="t">Public Wi-Fi operators</span><span class="r">Sees encrypted noise</span></li>
+   <li><span class="i">C</span><span class="t">Advertisers and trackers</span><span class="r">Lose your real IP</span></li>
+   <li><span class="i">D</span><span class="t">Censors and DPI systems</span><span class="r">See ordinary HTTPS</span></li>
+   <li><span class="i">E</span><span class="t">Us</span><span class="r">Nothing to hand over</span></li>
+  </ul></div>
+ </div></section>
+</main>
+<footer class="foot">
+  <div class="foot__word" aria-hidden="true">Trojan</div>
+  <div class="foot__grid">
+    <div class="foot__brand"><a class="logo" href="index.html#statue">Trojan VPN <small>MMXXVI</small></a>
+      <p>Privacy built like an empire. Ancient discipline, modern encryption, and a promise carved in stone: we keep nothing.</p>
+      <form class="newsletter" data-fake onsubmit="return false"><input type="email" placeholder="Your email for dispatches" aria-label="Email"><button type="submit">Join</button></form></div>
+    <div><h4>Product</h4><ul><li><a href="servers.html">Servers</a></li><li><a href="security.html">Security</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="download.html">Download</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="audits.html">Audits</a></li><li><a href="transparency.html">Transparency report</a></li><li><a href="careers.html">Careers</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy policy</a></li><li><a href="terms.html">Terms</a></li><li><a href="canary.html">Warrant canary</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="foot__bar"><span>Trojan VPN, MMXXVI. All rights reserved.</span><span>Roma. Mumbai. New York.</span></div>
+</footer>
+<div class="menu" id="menu" aria-hidden="true">
+  <button class="menu__close" type="button" aria-label="Close menu"><span></span><span></span></button>
+  <ul class="menu__list"><li><a href="servers.html">Servers</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="security.html">Security</a></li><li><a href="download.html">Download</a></li></ul>
+  <div class="menu__rule"></div><div class="menu__foot"><a class="btn-play" href="pricing.html">Get Trojan VPN</a></div>
+</div>
+<script src="site.js"></script>
+</body></html>
