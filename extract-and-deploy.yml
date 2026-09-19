@@ -1,0 +1,58 @@
+name: Extract site zip and deploy
+
+# Runs when the zip is pushed, or manually from the Actions tab
+on:
+  push:
+    paths:
+      - "trojan-vpn-site.zip"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to commit the extracted files
+  pages: write      # needed for GitHub Pages deploy
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract zip into repository root
+        run: |
+          set -e
+          test -f trojan-vpn-site.zip || { echo "trojan-vpn-site.zip not found in repo root"; exit 1; }
+          unzip -o -q trojan-vpn-site.zip -d .
+          rm -f index.backup.html
+          touch .nojekyll
+          echo "Extracted files:"; ls -la
+
+      - name: Commit extracted files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && echo "Nothing new to commit" || git commit -m "chore: extract trojan-vpn-site.zip"
+          git push
+
+      - name: Upload site as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: extract
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
