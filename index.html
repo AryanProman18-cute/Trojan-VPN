@@ -4,10 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trojan VPN</title>
-<meta name="description" content="Trojan VPN. Privacy built like an empire. Ancient discipline, modern encryption.">
+<meta name="description" content="Trojan VPN encrypts everything that leaves your device and keeps no record of it. 3,200 servers in 41 countries, audited every year, 30 day refund. Named for Troy, the city that taught the world what a wall is for.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Trojan VPN"><meta property="og:title" content="Trojan VPN. Nobody sees through these walls."><meta property="og:description" content="Encrypts your internet traffic on any network. No logs, independently audited."><meta property="og:image" content="assets/og.jpg"><meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=UnifrakturCook:wght@700&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Luxurious+Roman&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#0b0b0c;
@@ -23,7 +27,7 @@
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;color:var(--bone);background:var(--ink);overflow-x:hidden;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI","Instrument Sans",Helvetica,Arial,sans-serif;
+  font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Helvetica,Arial,sans-serif;
   -webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
@@ -41,11 +45,10 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 /* intro logo over the first frames */
 .intro{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;pointer-events:none;text-align:center;
   background:radial-gradient(60% 60% at 50% 50%,rgba(11,11,12,.55),rgba(11,11,12,.15) 70%,transparent)}
-.intro__logo{font-family:"UnifrakturCook",serif;font-weight:700;font-size:clamp(3.4rem,11vw,10rem);line-height:.9;color:var(--bone);text-shadow:0 20px 80px rgba(0,0,0,.6);
+.intro__logo{font-family:"Luxurious Roman",Georgia,serif;font-weight:400;font-size:clamp(3.4rem,11vw,10rem);line-height:.9;color:var(--bone);text-shadow:0 20px 80px rgba(0,0,0,.6);
   opacity:0;transform:translateY(24px);animation:introIn 1.4s var(--ease) .2s forwards}
 .intro__sub{font-size:.72rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);opacity:0;animation:introIn 1.2s ease .7s forwards}
-.intro__cue{position:absolute;bottom:clamp(1.6rem,5vh,3rem);display:flex;flex-direction:column;align-items:center;gap:.6rem;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(233,228,216,.6);opacity:0;animation:introIn 1s ease 1.4s forwards}
-.intro__cue i{width:1px;height:2.4rem;background:linear-gradient(to bottom,var(--gold),transparent);transform-origin:top;animation:cue 2.2s var(--ease-in-out) infinite}
+.intro__cue{position:absolute;bottom:clamp(1.8rem,5vh,3.2rem);font-size:clamp(.82rem,1.1vw,1rem);letter-spacing:.32em;text-transform:uppercase;color:var(--bone);text-shadow:0 2px 18px rgba(0,0,0,.9);opacity:0;animation:introIn 1s ease 1.4s forwards}
 @keyframes introIn{to{opacity:1;transform:none}}
 .hero__shade{position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
@@ -75,7 +78,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
   padding:clamp(1.1rem,2.4vh,1.8rem) var(--pad-x);
   opacity:0;transform:translateY(-14px);transition:opacity 1s ease,transform 1.2s var(--ease)}
 .hero.is-revealed .nav,.nav.is-forced{opacity:1;transform:none}
-.logo{font-family:"UnifrakturCook",serif;font-weight:700;font-size:clamp(1.5rem,2.4vw,2rem);letter-spacing:.01em;line-height:1;display:flex;align-items:center;gap:.55rem}
+.logo{font-family:"Luxurious Roman",Georgia,serif;font-weight:400;font-size:clamp(1.5rem,2.4vw,2rem);letter-spacing:.01em;line-height:1;display:flex;align-items:center;gap:.55rem}
 .logo small{font-family:"Instrument Sans",sans-serif;font-weight:500;font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;opacity:.6;margin-top:.3em}
 .nav__links{display:flex;gap:var(--nav-gap);list-style:none;margin:0;padding:0}
 .nav__links a{position:relative;font-size:.78rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:.35rem 0;opacity:.78;transition:opacity .4s}
@@ -94,7 +97,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 .burger[aria-expanded="true"] span:nth-child(3){top:22px;transform:rotate(-45deg)}
 
 /* ============ HERO INNER ============ */
-.hero__inner{position:relative;z-index:10;flex:1 1 0;min-height:0;display:flex;flex-direction:column;justify-content:flex-end;
+.hero__inner{position:relative;z-index:10;isolation:isolate;flex:1 1 0;min-height:0;display:flex;flex-direction:column;justify-content:flex-end;
   padding:0 var(--pad-x) clamp(1.2rem,4vh,3rem);pointer-events:none}
 .hero__content{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,5rem);align-items:end;pointer-events:auto}
 .headline{font-family:"Instrument Serif",Georgia,serif;font-weight:400;margin:0;
@@ -114,7 +117,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 .btn-solid:hover{background:var(--gold);transform:translateY(-2px)}
 .btn-solid svg{width:12px;height:12px;transition:transform .5s var(--ease)}
 .btn-solid:hover svg{transform:translateX(4px)}
-.link-plain{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;opacity:.75;border-bottom:1px solid rgba(233,228,216,.3);padding-bottom:.25rem;transition:opacity .4s,border-color .4s}
+.link-plain{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;opacity:1;color:var(--bone);text-shadow:0 1px 14px rgba(0,0,0,.9),0 0 3px rgba(0,0,0,.9);border-bottom:1px solid rgba(233,228,216,.55);padding-bottom:.25rem;transition:opacity .4s,border-color .4s}
 .link-plain:hover{opacity:1;border-color:var(--gold)}
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform 1.2s var(--ease)}
 .hero.is-revealed .reveal{opacity:1;transform:none}
@@ -149,13 +152,13 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
   filter:drop-shadow(0 0 0 rgba(0,0,0,0));transition:filter 2.5s ease .4s}
 .hero.is-revealed .stage__statue{filter:drop-shadow(0 40px 70px rgba(0,0,0,.85))}
 .stage__reveal{position:absolute;left:29.933%;top:6.969%;width:39.565%;height:92.818%;
-  background:url("assets/statue2-cut.png?v=1789829587") 0 0/100% 100% no-repeat;
+  background:url("assets/statue2-cut.webp") 0 0/100% 100% no-repeat;
   --sx:-9999px;--sy:-9999px;-webkit-mask-image:radial-gradient(260px circle at var(--sx) var(--sy),rgba(255,255,255,1) 0%,rgba(255,255,255,1) 40%,rgba(255,255,255,.75) 60%,rgba(255,255,255,.4) 75%,rgba(255,255,255,.12) 88%,rgba(255,255,255,0) 100%);mask-image:radial-gradient(260px circle at var(--sx) var(--sy),rgba(255,255,255,1) 0%,rgba(255,255,255,1) 40%,rgba(255,255,255,.75) 60%,rgba(255,255,255,.4) 75%,rgba(255,255,255,.12) 88%,rgba(255,255,255,0) 100%);opacity:0;transition:opacity .5s ease;will-change:opacity}
 
 .hero.is-revealed .hero__cutout{opacity:1}
 /* giant wordmark behind the statue */
 .hero__word{position:absolute;left:0;right:0;top:clamp(3.2rem,8vh,5.4rem);z-index:4;pointer-events:none;text-align:center;
-  font-family:"UnifrakturCook",serif;font-weight:700;line-height:.86;font-size:clamp(4.6rem,19vw,20rem);
+  font-family:"Luxurious Roman",Georgia,serif;font-weight:400;line-height:.86;font-size:clamp(4rem,15.5vw,16rem);letter-spacing:.02em;
   color:var(--bone);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;padding-bottom:.08em}
 .hero__word{visibility:hidden}
 .hero.is-revealed .hero__word{visibility:visible}
@@ -177,7 +180,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 /* ============ SECTION 02: HISTORY ============ */
 .history{position:relative;z-index:1;background:var(--ink);color:var(--bone);padding:clamp(2.5rem,5vh,4rem) var(--pad-x) clamp(3rem,6vh,5rem);
   min-height:100vh;overflow:hidden;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","Instrument Sans",Helvetica,Arial,sans-serif}
+  font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Helvetica,Arial,sans-serif}
 .history::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(60% 55% at 50% 40%,rgba(201,169,106,.10),transparent 70%)}
 .history__grid{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.1fr) minmax(0,.8fr);gap:clamp(1.5rem,3vw,3rem);align-items:center;min-height:70vh}
@@ -187,6 +190,8 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 .history__title .t1{display:block;font-size:clamp(2rem,3.6vw,3.4rem);font-style:italic;color:rgba(233,228,216,.9)}
 .history__title .t2{display:block;font-size:clamp(3.6rem,7.4vw,7.2rem);margin-top:.05em}
 .history__title .t2 em{font-style:normal;color:var(--gold)}
+.history__text--note{border-left:2px solid var(--gold);padding-left:1rem;color:rgba(233,228,216,.85)}
+.history__text--note strong{color:var(--gold);font-weight:500}
 .history__text{max-width:44ch;font-size:clamp(.92rem,1.02vw,1.02rem);line-height:1.7;color:rgba(233,228,216,.7);margin:0 0 2rem}
 .link-arrow{display:inline-flex;align-items:center;gap:.8rem;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--bone)}
 .link-arrow svg{width:34px;height:10px;transition:transform .6s var(--ease)}
@@ -216,15 +221,17 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 
 /* cards row */
 .history__cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(233,228,216,.1);margin-top:clamp(2.5rem,6vh,4.5rem);border:1px solid rgba(233,228,216,.1)}
-.card{position:relative;background:var(--ink);display:grid;grid-template-columns:auto 1fr;gap:1rem;padding:1.2rem;min-height:11rem;overflow:hidden;transition:background .5s}
+.card{position:relative;background:var(--ink);display:grid;grid-template-columns:auto 1fr;gap:1rem;padding:1.2rem;min-height:15rem;overflow:hidden;transition:background .5s}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(11,11,12,.96) 0%,rgba(11,11,12,.8) 45%,rgba(11,11,12,.15) 100%);pointer-events:none}
+.card__num{position:relative;z-index:1}
 .card:hover{background:#131315}
 .card__num{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(2.6rem,4vw,4rem);line-height:.8;color:rgba(233,228,216,.22);transition:color .5s}
 .card:hover .card__num{color:var(--gold)}
-.card__img{position:absolute;inset:0;opacity:.22;background-size:cover;background-position:center;filter:grayscale(1) contrast(1.1);transition:opacity .6s,transform 1.2s var(--ease)}
+.card__img{position:absolute;inset:0;opacity:.28;background-size:cover;background-position:center top;filter:grayscale(1) contrast(1.1);transition:opacity .6s,transform 1.2s var(--ease)}
 .card:hover .card__img{opacity:.38;transform:scale(1.05)}
-.card__body{position:relative;z-index:1;align-self:end}
-.card__body h3{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:1.2rem;margin:0 0 .4rem}
-.card__body p{margin:0;font-size:.78rem;line-height:1.55;color:rgba(233,228,216,.62)}
+.card__body{position:relative;z-index:1;align-self:end;display:grid;grid-template-rows:auto 6.2em}
+.card__body h3{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:1.2rem;margin:0 0 .4rem;line-height:1.1}
+.card__body p{margin:0;font-size:.78rem;line-height:1.55;color:rgba(233,228,216,.78)}
 .card__go{position:absolute;right:1rem;top:1rem;z-index:1;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);opacity:0;transform:translateX(-6px);transition:opacity .4s,transform .5s var(--ease)}
 .card:hover .card__go{opacity:1;transform:none}
 
@@ -245,7 +252,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
   .hero__aside p{display:none}
   .hero__cta{gap:.8rem}
   .btn-solid{padding:.8rem 1.2rem;font-size:.7rem}
-  .scrolltrack{height:540vh}
+  .scrolltrack{height:300vh}
   .hero__inner{padding-bottom:1.2rem}
   .hero__content{align-items:end}
 }
@@ -253,7 +260,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 
 /* ============ SHARED SECTION BITS ============ */
 .sec{position:relative;background:var(--ink);color:var(--bone);padding:clamp(4.5rem,10vh,8rem) var(--pad-x);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","Instrument Sans",Helvetica,Arial,sans-serif;overflow:hidden}
+  font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Helvetica,Arial,sans-serif;overflow:hidden}
 .sec+.sec::before,.history+.sec::before{content:"";position:absolute;left:var(--pad-x);right:var(--pad-x);top:0;height:1px;background:rgba(233,228,216,.1)}
 .kicker{display:flex;align-items:center;gap:.9rem;font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin:0 0 1.4rem}
 .kicker::before{content:"";width:2.4rem;height:1px;background:var(--gold)}
@@ -266,7 +273,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 /* ============ NETWORK ============ */
 .net{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(2rem,5vw,6rem);align-items:center}
 .net__visual{position:relative;aspect-ratio:1;max-width:36rem;margin:0 auto;width:100%}
-.net__img{position:absolute;inset:8%;border-radius:50%;background:url("assets/gen-network.jpg") center/cover;
+.net__img{position:absolute;inset:8%;border-radius:50%;background:url("assets/gen-network.webp") center/cover;
   -webkit-mask:radial-gradient(circle,#000 55%,transparent 72%);mask:radial-gradient(circle,#000 55%,transparent 72%)}
 .orbit{position:absolute;left:50%;top:50%;border-radius:50%;border:1px solid rgba(233,228,216,.14);transform:translate(-50%,-50%)}
 .orbit--1{width:78%;height:78%;animation:spin 60s linear infinite}
@@ -291,12 +298,12 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 .sec__img{position:relative;min-height:26rem;border:1px solid rgba(233,228,216,.12);overflow:hidden}
 .sec__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 2s var(--ease)}
 .sec__img:hover img{transform:scale(1)}
-.sec__img figcaption{position:absolute;left:1.2rem;bottom:1.1rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(233,228,216,.7)}
+.sec__img figcaption{position:absolute;left:1.2rem;bottom:1.1rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--bone);background:rgba(11,11,12,.72);padding:.45rem .7rem;border-left:2px solid var(--gold);text-shadow:0 1px 8px rgba(0,0,0,.8)}
 .acc{margin:0;padding:0;list-style:none;border-top:1px solid rgba(233,228,216,.12)}
 .acc li{border-bottom:1px solid rgba(233,228,216,.12)}
 .acc button{width:100%;display:grid;grid-template-columns:3rem 1fr auto;align-items:center;gap:1rem;padding:1.3rem 0;text-align:left;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(1.25rem,1.8vw,1.6rem);transition:color .4s}
 .acc button:hover,.acc li.is-open button{color:var(--gold)}
-.acc button .i{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;font-size:.66rem;letter-spacing:.26em;color:var(--gold)}
+.acc button .i{font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,sans-serif;font-size:.66rem;letter-spacing:.26em;color:var(--gold)}
 .acc button .plus{position:relative;width:14px;height:14px}
 .acc button .plus::before,.acc button .plus::after{content:"";position:absolute;background:currentColor;left:0;top:6px;width:14px;height:1px;transition:transform .5s var(--ease)}
 .acc button .plus::after{transform:rotate(90deg)}
@@ -314,7 +321,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 .plan__tag{position:absolute;top:-.6rem;left:1.8rem;background:var(--gold);color:var(--ink);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;padding:.3rem .7rem}
 .plan h3{margin:0;font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:1.8rem}
 .plan .price{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(2.6rem,4vw,3.6rem);line-height:1}
-.plan .price small{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(233,228,216,.55);margin-left:.4rem}
+.plan .price small{font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(233,228,216,.55);margin-left:.4rem}
 .plan .bill{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
 .plan ul{list-style:none;margin:.4rem 0 0;padding:0;display:grid;gap:.6rem;flex:1}
 .plan li{font-size:.9rem;color:rgba(233,228,216,.75);padding-left:1.4rem;position:relative}
@@ -327,7 +334,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 
 /* ============ TESTIMONIAL BAND ============ */
 .sec--quote{padding:0;min-height:60vh;display:grid;place-items:center;text-align:center}
-.sec--quote .bg{position:absolute;inset:0;background:url("assets/gen-laurel.jpg") center/cover;opacity:.35}
+.sec--quote .bg{position:absolute;inset:0;background:url("assets/gen-laurel.webp") center/cover;opacity:.35}
 .sec--quote .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,transparent,var(--ink) 90%)}
 .quote{position:relative;padding:clamp(4rem,10vh,8rem) var(--pad-x);max-width:52rem}
 .quote p{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(1.6rem,3.2vw,2.8rem);line-height:1.25;margin:0}
@@ -346,8 +353,8 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 
 /* ============ FOOTER ============ */
 .foot{background:var(--ink);color:var(--bone);padding:clamp(3rem,8vh,6rem) var(--pad-x) 2rem;border-top:1px solid rgba(233,228,216,.12);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","Instrument Sans",Helvetica,Arial,sans-serif;position:relative;overflow:hidden}
-.foot__word{font-family:"UnifrakturCook",serif;font-weight:700;font-size:clamp(4rem,17vw,18rem);line-height:.8;color:rgba(233,228,216,.06);text-align:center;letter-spacing:-.01em;user-select:none;margin:0 0 -.1em;white-space:nowrap}
+  font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Helvetica,Arial,sans-serif;position:relative;overflow:hidden}
+.foot__word{font-family:"Luxurious Roman",Georgia,serif;font-weight:400;font-size:clamp(4rem,17vw,18rem);line-height:.8;color:rgba(233,228,216,.06);text-align:center;letter-spacing:-.01em;user-select:none;margin:0 0 -.1em;white-space:nowrap}
 .foot__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-top:2rem}
 .foot h4{margin:0 0 1rem;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 .foot ul{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
@@ -398,11 +405,15 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 
 @media (prefers-reduced-motion:reduce){
   *{transition-duration:.01ms!important;animation:none!important}
+  .scrolltrack{height:auto!important}
+  .scrolltrack .hero{position:relative;height:100svh}
+  .intro{display:none}
 }
 @media (max-width:900px){
   .nav__links,.nav .btn-play{display:none}
   .burger{display:block}
   .hero__content{grid-template-columns:1fr;gap:1rem}
+  .hero__inner::before{content:"";position:absolute;left:0;right:0;bottom:0;height:78%;z-index:-1;background:linear-gradient(to top,rgba(11,11,12,.97) 0%,rgba(11,11,12,.85) 45%,rgba(11,11,12,.45) 78%,rgba(11,11,12,0) 100%);pointer-events:none}
   .intro__logo{font-size:clamp(2.6rem,14vw,6rem)}
   .hero__aside p{font-size:.9rem;margin-bottom:1rem;max-width:36ch}
   .hero__word{font-size:clamp(4rem,22vw,12rem);top:clamp(3.6rem,10vh,6rem)}
@@ -419,12 +430,12 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 <div class="scrolltrack" id="scrolltrack">
 <section class="hero" id="hero">
   <div class="hero__media" aria-hidden="true">
-    <canvas id="seq"></canvas>
+    <canvas id="seq" role="img" aria-label="Camera pulling back from the face of a marble statue to reveal it standing in a museum hall"></canvas>
   </div>
   <div class="intro" id="intro" aria-hidden="true">
     <div class="intro__logo">Trojan VPN</div>
-    <div class="intro__sub">Privacy built like an empire</div>
-    <div class="intro__cue"><i></i>Scroll</div>
+    <div class="intro__sub">Your connection, encrypted. Your business, your own.</div>
+    <div class="intro__cue">Scroll to view</div>
   </div>
   <div class="hero__shade" aria-hidden="true"></div>
   <div class="hero__word" aria-hidden="true"><span>TROJAN</span></div>
@@ -434,8 +445,8 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
         <defs><pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M 48 0 L 0 0 0 48" fill="none" stroke="#64748b" stroke-width="0.6"/></pattern></defs>
         <rect width="100%" height="100%" fill="url(#grid)"/>
       </svg>
-      <img class="stage__statue" id="statueBase" src="assets/statue1-cut.png?v=1789829587" alt="">
-      <div class="stage__reveal" id="revealLayer"></div>
+      <img class="stage__statue" id="statueBase" src="assets/statue1-cut.webp" alt="Marble statue of a standing Trojan warrior in a museum hall">
+      <div class="stage__reveal" id="revealLayer" role="img" aria-label="The same statue veined with blood red and gold, revealed by the cursor"></div>
     </div>
   </div>
   <div class="hero__grain" aria-hidden="true"></div>
@@ -454,7 +465,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
       </ul>
     </nav>
     <div class="nav__right">
-      <a class="btn-play" href="pricing.html">Get Trojan</a>
+      <a class="btn-play" href="pricing.html">Get protected</a>
       <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
     </div>
   </header>
@@ -463,26 +474,25 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
     <div class="hero__content">
       <div>
         <h1 class="headline">
-          <span class="line"><span>Privacy built</span></span>
-          <span class="line"><span>like an <em>empire.</em></span></span>
-          <span class="line"><span>Unbreached.</span></span>
+          <span class="line"><span>Nobody sees</span></span>
+          <span class="line"><span>through <em>these walls.</em></span></span>
         </h1>
       </div>
       <div class="hero__aside">
-        <p class="reveal">Trojan VPN wraps your traffic in armour forged from modern encryption and ancient discipline. No logs, no borders, no watchers. Just you, moving unseen across the open network.</p>
+        <p class="reveal">Trojan VPN encrypts everything that leaves your device and swaps your IP address for one of ours. Your internet provider, the café Wi-Fi, the ad networks: all of them get a wall where you used to be. Every device, one account.</p>
         <div class="hero__cta reveal">
-          <a class="btn-solid" href="pricing.html">Enter the gates
+          <a class="btn-solid" href="pricing.html">Get Trojan VPN
             <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 6h10M6.5 1.5 11 6l-4.5 4.5"/></svg>
           </a>
-          <a class="link-plain" href="servers.html">See the network</a>
+          <a class="link-plain" href="security.html">How the wall is built</a>
         </div>
       </div>
     </div>
     <div class="hero__meta">
       <div class="rule" aria-hidden="true"></div>
-      <span>AES-256 · WireGuard · Zero logs</span>
+      <span>30 days. Not happy, full refund.</span>
       <span class="scroll-cue"><i></i>Scroll</span>
-      <span>94 cities · 41 nations</span>
+      <span>3,200+ servers in 41 countries</span>
     </div>
   </div>
 
@@ -494,11 +504,12 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
     <div>
       <p class="history__kicker fx">Chapter II</p>
       <h2 class="history__title">
-        <span class="t1 fx d1">Built on the</span>
-        <span class="t2 fx d2">Rome <em>of privacy</em></span>
+        <span class="t1 fx d1">Why a city that fell</span>
+        <span class="t2 fx d2">is the right <em>name</em></span>
       </h2>
-      <p class="history__text fx d3">Rome held for a thousand years because its walls were never the point. Its roads, its couriers and its sealed dispatches were. Trojan VPN is the modern legion for your traffic: encrypted tunnels, no records kept, every route guarded from the first mile to the last.</p>
-      <a class="link-arrow fx d4" href="about.html">Continue reading
+      <p class="history__text fx d3">Troy's walls held for ten years. The city only fell to a gift it let in. Online, that is the whole game: the wall is only as good as the gate.</p>
+      <p class="history__text fx d3">Trojan VPN is that wall. It encrypts everything between your device and the internet, keeps no record of what passed, and shows the world a server of ours instead of you.</p>
+      <a class="link-arrow fx d4" href="about.html">See what the wall is made of
         <svg viewBox="0 0 34 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 5h32M28 1l4 4-4 4"/></svg>
       </a>
     </div>
@@ -506,21 +517,21 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
     <div class="history__stage">
       <div class="history__halo" aria-hidden="true"></div>
       <div class="history__ring" aria-hidden="true"></div>
-      <img class="history__col history__col--l" src="assets/column.png" alt="" aria-hidden="true">
-      <img class="history__col history__col--r" src="assets/column.png" alt="" aria-hidden="true">
-      <img class="history__bust fx d1" src="assets/bust-gold.png" alt="Marble bust split with gold, the Trojan emblem">
+      <img class="history__col history__col--l" src="assets/column.webp" alt="" aria-hidden="true">
+      <img class="history__col history__col--r" src="assets/column.webp" alt="" aria-hidden="true">
+      <img class="history__bust fx d1" src="assets/bust-gold.webp" alt="Marble bust split with gold, the Trojan emblem">
     </div>
 
     <div>
       <ul class="history__menu">
-        <li class="fx"><a href="security.html">Encrypted tunnels<span>01</span></a></li>
-        <li class="fx d1"><a href="security.html" class="is-active">Zero log policy<span>02</span></a></li>
-        <li class="fx d2"><a href="servers.html">Global legion of servers<span>03</span></a></li>
+        <li class="fx"><a href="security.html">Encrypted, end to end<span>01</span></a></li>
+        <li class="fx d1"><a href="security.html" class="is-active">No logs, and proof of it<span>02</span></a></li>
+        <li class="fx d2"><a href="servers.html">3,200 servers, 41 countries<span>03</span></a></li>
         <li class="fx d3"><a href="security.html">Kill switch<span>04</span></a></li>
         <li class="fx d4"><a href="security.html">Split tunnelling<span>05</span></a></li>
-        <li class="fx d4"><a href="audits.html">Open source audits<span>06</span></a></li>
+        <li class="fx d4"><a href="audits.html">Open source, open books<span>06</span></a></li>
       </ul>
-      <a class="link-arrow history__browse fx d4" href="security.html">Browse all
+      <a class="link-arrow history__browse fx d4" href="security.html">All features
         <svg viewBox="0 0 34 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 5h32M28 1l4 4-4 4"/></svg>
       </a>
     </div>
@@ -528,35 +539,35 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 
   <div class="history__cards">
     <a class="card fx" href="security.html">
-      <div class="card__img" style="background-image:url('assets/caesar.jpg')"></div>
+      <div class="card__img" style="background-image:url('assets/caesar.webp')"></div>
       <div class="card__num">01</div>
-      <div class="card__body"><h3>The Cipher</h3><p>AES-256 and WireGuard. The same grade of encryption trusted by states, wrapped around every packet you send.</p></div>
-      <span class="card__go">Explore</span>
+      <div class="card__body"><h3>The wall</h3><p>AES-256 over WireGuard. The same maths that guards banks and governments now guards your Tuesday evening. Anyone listening on the network hears static.</p></div>
+      <span class="card__go">Learn more</span>
     </a>
     <a class="card fx d1" href="servers.html">
-      <div class="card__img" style="background-image:url('assets/back.jpg')"></div>
+      <div class="card__img" style="background-image:url('assets/back.webp')"></div>
       <div class="card__num">02</div>
-      <div class="card__body"><h3>The Legion</h3><p>Servers across 41 nations, running from RAM only. Nothing written, nothing left behind when the power drops.</p></div>
-      <span class="card__go">Explore</span>
+      <div class="card__body"><h3>The roads</h3><p>3,200 servers in 41 countries, every one running from memory alone. Pull the plug and it forgets you existed. That is by design.</p></div>
+      <span class="card__go">Learn more</span>
     </a>
     <a class="card fx d2" href="security.html">
-      <div class="card__img" style="background-image:url('assets/venus.jpg')"></div>
+      <div class="card__img" style="background-image:url('assets/venus.webp')"></div>
       <div class="card__num">03</div>
-      <div class="card__body"><h3>The Veil</h3><p>Obfuscated traffic that looks like ordinary browsing, so restrictive networks never see a VPN at all.</p></div>
-      <span class="card__go">Explore</span>
+      <div class="card__body"><h3>The disguise</h3><p>Stealth mode dresses your VPN traffic as ordinary web browsing. Office firewalls, campus filters and censors wave it through. Fitting, given the name.</p></div>
+      <span class="card__go">Learn more</span>
     </a>
     <a class="card fx d3" href="audits.html">
-      <div class="card__img" style="background-image:url('assets/statue-bust.png')"></div>
+      <div class="card__img" style="background-image:url('assets/statue-bust.webp')"></div>
       <div class="card__num">04</div>
-      <div class="card__body"><h3>The Oath</h3><p>No logs, independently audited. A promise carved in stone, not written in a policy nobody reads.</p></div>
-      <span class="card__go">Explore</span>
+      <div class="card__body"><h3>The oath</h3><p>We keep no record of what you visit or when. Every year we pay outside auditors to try to prove us wrong, and publish whatever they find. So far: nothing.</p></div>
+      <span class="card__go">Learn more</span>
     </a>
   </div>
 </section>
 
 <section class="sec" id="servers">
   <div class="sec__head">
-    <div><p class="kicker fx">Chapter III</p><h2 class="h2 fx d1">A legion of servers,<br><em>stationed everywhere.</em></h2></div>
+    <div><p class="kicker fx">Chapter III</p><h2 class="h2 fx d1">All roads lead<br><em>wherever you point them.</em></h2></div>
     <div class="num-roman fx d2">III</div>
   </div>
   <div class="net">
@@ -566,7 +577,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
       <div class="orbit orbit--2"><i></i><i></i></div>
     </div>
     <div>
-      <p class="lead fx d1">Rome's couriers changed horses every few miles so a message never slowed down. Our network works the same way. Thousands of RAM-only servers hand your traffic along the fastest guarded road, with no diaries kept at any station.</p>
+      <p class="lead fx d1">Rome built roads so a message could cross an empire without stopping. Ours run at 10 gigabits and never keep a diary. Connect to the nearest city for full speed, or pick another country and browse as if you lived there.</p>
       <div class="stats">
         <div class="stat fx d1"><b data-count="3200">0<small>+</small></b><span>Servers</span></div>
         <div class="stat fx d2"><b data-count="94">0</b><span>Cities</span></div>
@@ -582,36 +593,36 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
 
 <section class="sec sec--security" id="security">
   <div class="sec__head">
-    <div><p class="kicker fx">Chapter IV</p><h2 class="h2 fx d1">Walls that hold.<br><em>Secrets that stay.</em></h2></div>
+    <div><p class="kicker fx">Chapter IV</p><h2 class="h2 fx d1">Walls you can<br><em>inspect yourself.</em></h2></div>
     <div class="num-roman fx d2">IV</div>
   </div>
   <div class="secgrid">
-    <figure class="sec__img fx" style="margin:0"><img src="assets/gen-shield.jpg" alt="Marble hand holding a black and gold shield"><figcaption>Fig. 04, The Shield</figcaption></figure>
+    <figure class="sec__img fx" style="margin:0"><img src="assets/gen-shield.webp" alt="Marble hand holding a black and gold shield"><figcaption>Fig. 04, The Shield</figcaption></figure>
     <ul class="acc fx d1" id="acc">
       <li class="is-open"><button type="button" aria-expanded="true"><span class="i">01</span>AES-256 and WireGuard<span class="plus"></span></button>
-        <div class="acc__body"><div><p>Every session is sealed with AES-256-GCM or ChaCha20 over WireGuard, the same ciphers relied on by governments and banks. Keys rotate automatically and never touch a disk.</p></div></div></li>
+        <div class="acc__body"><div><p>Every session is sealed with AES-256-GCM or ChaCha20 over WireGuard. Keys rotate on their own and are never written anywhere. If one were somehow taken, it would open nothing that came before it.</p></div></div></li>
       <li><button type="button" aria-expanded="false"><span class="i">02</span>Strict no log policy<span class="plus"></span></button>
-        <div class="acc__body"><div><p>We do not record what you visit, when you connect, or from where. Our servers run entirely from memory and are wiped on every reboot. The claim is verified by independent third party audits.</p></div></div></li>
+        <div class="acc__body"><div><p>We do not record which sites you visit, when you connect, or from where. There is no quiet exception for "diagnostics". Servers run from memory and forget everything on restart, and independent auditors confirm it every year.</p></div></div></li>
       <li><button type="button" aria-expanded="false"><span class="i">03</span>Kill switch and leak guard<span class="plus"></span></button>
-        <div class="acc__body"><div><p>If the tunnel ever falters, the gates close. All traffic is blocked at the system level until the connection is restored, and DNS, IPv6 and WebRTC leaks are sealed by default.</p></div></div></li>
-      <li><button type="button" aria-expanded="false"><span class="i">04</span>Obfuscated Trojan protocol<span class="plus"></span></button>
-        <div class="acc__body"><div><p>Our namesake. Traffic is wrapped to look like everyday HTTPS, so restrictive networks and deep packet inspection see nothing but ordinary browsing. Inside, the legion moves unseen.</p></div></div></li>
+        <div class="acc__body"><div><p>If the tunnel drops for even a second, the gate shuts. Nothing leaves your device until the wall is back up. DNS, IPv6 and WebRTC leaks are sealed by default, not buried in a settings menu.</p></div></div></li>
+      <li><button type="button" aria-expanded="false"><span class="i">04</span>Stealth mode for blocked networks<span class="plus"></span></button>
+        <div class="acc__body"><div><p>Some networks hunt for VPNs and block them. Stealth mode wraps your connection so it looks like a plain visit to any website. The gate opens, and what walks through is yours.</p></div></div></li>
       <li><button type="button" aria-expanded="false"><span class="i">05</span>Open source, openly audited<span class="plus"></span></button>
-        <div class="acc__body"><div><p>Our apps and protocol implementation are public. Anyone may read them, and professionals are paid to break them. Reports are published in full, including what we got wrong.</p></div></div></li>
+        <div class="acc__body"><div><p>Our apps are open source. Anyone can read them, and every year we pay professionals to break them. Their reports go up unedited, including the parts that embarrass us.</p></div></div></li>
     </ul>
   </div>
 </section>
 
 <section class="sec" id="pricing">
   <div class="sec__head">
-    <div><p class="kicker fx">Chapter V</p><h2 class="h2 fx d1">Tribute worthy<br><em>of an empire.</em></h2></div>
+    <div><p class="kicker fx">Chapter V</p><h2 class="h2 fx d1">One wall.<br><em>Choose how many stand behind it.</em></h2></div>
     <div class="num-roman fx d2">V</div>
   </div>
   <div class="plans">
     <div class="plan fx">
       <h3>Citizen</h3>
-      <div class="price">$9.99<small>/ month</small></div>
-      <div class="bill">Billed monthly</div>
+      <div class="price">$2.99<small>/ month</small></div>
+      <div class="bill">Billed $71.76 every 2 years</div>
       <ul><li>All 3,200+ servers</li><li>5 devices at once</li><li>AES-256 and WireGuard</li><li>Kill switch</li><li>24/7 support</li></ul>
       <a class="btn-outline" href="pricing.html">Choose Citizen</a>
     </div>
@@ -620,36 +631,36 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
       <h3>Senator</h3>
       <div class="price">$3.49<small>/ month</small></div>
       <div class="bill">Billed $83.76 every 2 years</div>
-      <ul><li>Everything in Citizen</li><li>10 devices at once</li><li>Obfuscated Trojan protocol</li><li>Dedicated IP add on</li><li>Priority support</li><li>Save 65 percent</li></ul>
+      <ul><li>Everything in Citizen</li><li>10 devices at once</li><li>Stealth mode</li><li>Dedicated IP add on</li><li>Priority support</li></ul>
       <a class="btn-outline" href="pricing.html">Choose Senator</a>
     </div>
     <div class="plan fx d2">
       <h3>Emperor</h3>
-      <div class="price">$5.99<small>/ month</small></div>
-      <div class="bill">Billed $71.88 yearly</div>
+      <div class="price">$4.99<small>/ month</small></div>
+      <div class="bill">Billed $119.76 every 2 years</div>
       <ul><li>Everything in Senator</li><li>Unlimited devices</li><li>Encrypted password vault</li><li>Breach monitoring</li><li>Family sharing for 6</li></ul>
       <a class="btn-outline" href="pricing.html">Choose Emperor</a>
     </div>
   </div>
-  <p class="guarantee fx d3">30 day money back guarantee. No questions, no records.</p>
+  <p class="guarantee fx d3">Thirty days to decide. If it is not for you, one click and a full refund, no interview.</p>
 </section>
 
 <section class="sec sec--quote">
   <div class="bg" aria-hidden="true"></div>
   <blockquote class="quote fx" style="margin:0">
-    <p>"I had used three VPNs before this. Trojan is the first one that felt less like a product and more like <em>a promise kept.</em>"</p>
+    <p>"Three VPNs before this one. Trojan is the first I stopped noticing, which is the highest thing I can say about <em>software like this.</em>"</p>
     <cite>Aarav M., Hyderabad. Senator plan since 2024</cite>
   </blockquote>
 </section>
 
 <section class="sec" id="download">
   <div class="sec__head">
-    <div><p class="kicker fx">Chapter VI</p><h2 class="h2 fx d1">Enter the gates<br><em>on every device.</em></h2></div>
+    <div><p class="kicker fx">Chapter VI</p><h2 class="h2 fx d1">Carry the wall<br><em>with you.</em></h2></div>
     <div class="num-roman fx d2">VI</div>
   </div>
   <div class="dl">
     <div>
-      <p class="lead fx" style="margin-top:0">One account, every gate. Native apps for every platform you own, plus browser extensions and router firmware for the whole household. Sign in once and the legion follows you.</p>
+      <p class="lead fx" style="margin-top:0">Mac, Windows, Android, iOS, Linux, browser extensions, and a router setup that covers everything in the house down to the fridge. One account. Sign in once and stop thinking about it.</p>
       <div class="dl__cta fx d1">
         <a class="btn-solid" href="download.html">Download Trojan
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 6h10M6.5 1.5 11 6l-4.5 4.5"/></svg></a>
@@ -672,7 +683,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
   <div class="foot__grid">
     <div class="foot__brand">
       <a class="logo" href="index.html">Trojan VPN <small>MMXXVI</small></a>
-      <p>Privacy built like an empire. Ancient discipline, modern encryption, and a promise carved in stone: we keep nothing.</p>
+      <p>Encrypts your connection, hides your address, remembers nothing. Named for Troy, the city that taught the world what a wall is for.</p>
       <form class="newsletter" onsubmit="return false"><input type="email" placeholder="Your email for dispatches" aria-label="Email"><button type="submit">Join</button></form>
     </div>
     <div><h4>Product</h4><ul><li><a href="servers.html">Servers</a></li><li><a href="security.html">Security</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="download.html">Download</a></li></ul></div>
@@ -691,7 +702,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
     <li><a href="download.html">Download</a></li>
   </ul>
   <div class="menu__rule"></div>
-  <div class="menu__foot"><a class="btn-play" href="pricing.html">Get Trojan VPN</a></div>
+  <div class="menu__foot"><a class="btn-play" href="pricing.html">Get protected</a></div>
 </div>
 
 <script>
@@ -703,7 +714,7 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
   var intro=document.getElementById('intro');
 
   /* ===== Frame sequence scrubbed by scroll ===== */
-  var N=48, frames=[], loaded=0, cur=-1;
+  var N=120, frames=[], loaded=0, cur=-1;
   var cvs=document.getElementById('seq'), c2=cvs.getContext('2d',{alpha:false});
   var FW=1600, FH=900;
   function sizeSeq(){
@@ -711,8 +722,9 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
     cvs.width=Math.round(hero.clientWidth*dpr); cvs.height=Math.round(hero.clientHeight*dpr);
     cur=-1; draw();
   }
-  function draw(){
-    var i=Math.max(0,Math.min(N-1,Math.round(progress()*(N-1))));
+  function draw(){ drawAt(shown); }
+  function drawAt(pp){
+    var i=Math.max(0,Math.min(N-1,Math.round(pp*(N-1))));
     var img=frames[i];
     if(!img||!img.complete||!img.naturalWidth){ /* nearest loaded frame */
       for(var d=1;d<N;d++){ var a=frames[i-d],b=frames[i+d]; if(a&&a.complete&&a.naturalWidth){img=a;break;} if(b&&b.complete&&b.naturalWidth){img=b;break;} }
@@ -733,24 +745,39 @@ html{overflow-x:clip}body{overflow-x:clip;max-width:100vw}
     hero.classList.toggle('is-revealed',on);
     hero.style.transform='';
   }
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var shown=0, target=0, raf=0;
+  function tick(){
+    raf=0;
+    shown+= (target-shown)*0.22;
+    if(Math.abs(target-shown)<0.0008) shown=target;
+    drawAt(shown);
+    if(shown!==target) raf=requestAnimationFrame(tick);
+  }
   function onSeq(){
-    var p=progress(); draw();
+    var p=progress();
+    if(reduce){ p=1; }
+    target=p;
+    if(!raf) raf=requestAnimationFrame(tick);
     /* intro logo fades over the first 18% of scroll */
     var k=Math.min(1,p/0.18); intro.style.opacity=(1-k).toFixed(3); intro.style.transform='translateY('+(-k*40)+'px)';
+    if(reduce){ intro.style.display='none'; }
     /* reveal the statue, wordmark and copy once the last frame is reached */
     setReveal(p>=0.999);
   }
   /* preload: first frame immediately, then the rest in order */
   for(var i=0;i<N;i++){ frames[i]=new Image(); }
+  var LANES=4;
+  function src(i){ return 'assets/frames/f'+String(i).padStart(3,'0')+'.webp'; }
   function loadFrom(i){
     if(i>=N) return;
-    frames[i].onload=function(){ loaded++; if(i===0||i===N-1) { cur=-1; draw(); } loadFrom(i+1); };
-    frames[i].onerror=function(){ loadFrom(i+1); };
-    frames[i].src='assets/frames/f'+(i<10?'0'+i:i)+'.jpg';
+    frames[i].onload=function(){ loaded++; if(i===0||i===N-1) { cur=-1; draw(); } loadFrom(i+LANES); };
+    frames[i].onerror=function(){ loadFrom(i+LANES); };
+    frames[i].src=src(i);
   }
-  loadFrom(0);
+  for(var L=0;L<LANES;L++) loadFrom(L);
   /* also fetch the last frame early so the reveal never waits */
-  frames[N-1].src='assets/frames/f47.jpg';
+  frames[N-1].src=src(N-1);
   window.addEventListener('scroll',onSeq,{passive:true});
   window.addEventListener('resize',function(){ sizeSeq(); onSeq(); });
   sizeSeq(); onSeq();
