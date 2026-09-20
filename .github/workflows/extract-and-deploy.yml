@@ -1,15 +1,14 @@
 name: Extract site zip and deploy
 
-# Runs when the zip is pushed, or manually from the Actions tab
 on:
   push:
     paths:
-      - "trojan-vpn-site.zip"
+      - "**.zip"
   workflow_dispatch:
 
 permissions:
-  contents: write   # needed to commit the extracted files
-  pages: write      # needed for GitHub Pages deploy
+  contents: write
+  pages: write
   id-token: write
 
 concurrency:
@@ -21,27 +20,48 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Find the zip
+        id: find
+        run: |
+          set -e
+          ZIP=$(find . -path ./.git -prune -o -iname "*.zip" -print | head -n 1)
+          if [ -z "$ZIP" ]; then
+            echo "::error::No .zip file found anywhere in the repository. Upload trojan-vpn-site.zip to the repo root."
+            exit 1
+          fi
+          echo "Using $ZIP"
+          echo "zip=$ZIP" >> "$GITHUB_OUTPUT"
 
       - name: Extract zip into repository root
         run: |
           set -e
-          test -f trojan-vpn-site.zip || { echo "trojan-vpn-site.zip not found in repo root"; exit 1; }
-          unzip -o -q trojan-vpn-site.zip -d .
+          # remove old site files so renamed/deleted assets do not linger
+          rm -rf assets *.html site.css site.js build_pages.py README.md
+          unzip -o -q "${{ steps.find.outputs.zip }}" -d .
           rm -f index.backup.html
           touch .nojekyll
           echo "Extracted files:"; ls -la
 
       - name: Commit extracted files
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet && echo "Nothing new to commit" || git commit -m "chore: extract trojan-vpn-site.zip"
-          git push
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit"
+          else
+            git commit -m "chore: extract site zip"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
 
       - name: Upload site as Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: .
 
@@ -55,4 +75,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
+        
