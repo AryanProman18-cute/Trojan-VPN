@@ -11,9 +11,9 @@ HREF={'Home':'index.html','Servers':'servers.html','Pricing':'pricing.html','Sec
 def shell(slug,title,desc,body,current=None):
     links=''.join(f'<li><a href="{HREF[n]}"{" aria-current=\"page\"" if n==current else ""}>{n}</a></li>' for n in NAV)
     return f'''<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} | Trojan VPN</title><meta name="description" content="{desc}"><meta property="og:type" content="website"><meta property="og:site_name" content="Trojan VPN"><meta property="og:title" content="{title} | Trojan VPN"><meta property="og:description" content="{desc}"><meta property="og:image" content="assets/og.jpg"><meta name="twitter:card" content="summary_large_image">
-{FONTS}<link rel="stylesheet" href="site.css"></head>
+{FONTS}<link rel="stylesheet" href="site.css?v=20260921"></head>
 <body>
 <header class="nav">
   <a class="logo" href="index.html#statue">Trojan VPN <small>MMXXVI</small></a>
@@ -41,7 +41,8 @@ def shell(slug,title,desc,body,current=None):
   <ul class="menu__list"><li><a href="servers.html">Servers</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="security.html">Security</a></li><li><a href="download.html">Download</a></li></ul>
   <div class="menu__rule"></div><div class="menu__foot"><a class="btn-play" href="pricing.html">Get protected</a></div>
 </div>
-<script src="site.js"></script>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+<script src="site.js?v=20260921"></script>
 </body></html>'''
 
 def phero(crumb,h1,p,img,word,meta=None):
@@ -119,7 +120,20 @@ pages['security']=('Security','How Trojan VPN protects you: AES-256, WireGuard, 
   </ul>
  </div></section>
  <section class="sec"><div class="split split--rev">
-  <figure class="fig fx"><img src="assets/gen-helmet.webp" alt="Marble Roman helmet"><figcaption>Fig. 02, The Helmet</figcaption></figure>
+  <div class="exhibit exhibit--wide fx" id="exhibitSarco">
+      <div class="exhibit__light" aria-hidden="true"></div>
+      <model-viewer class="exhibit__model" data-scroll-rotate data-base="-140" data-turn="260" src="assets/sarcophagus.glb?v=20260921" alt="3D marble sarcophagus from Sidon, carved with standing figures between columns"
+        loading="lazy" disable-zoom disable-pan interaction-prompt="none" camera-controls camera-orbit="-140deg 72deg 11m" min-camera-orbit="auto 55deg 11m" max-camera-orbit="auto 92deg 11m" camera-target="0m -0.2m 0m"
+        field-of-view="24deg" exposure="1.05" shadow-intensity="1.3" shadow-softness="0.7" environment-image="neutral" tone-mapping="aces">
+        <button class="pin pin--right" slot="hotspot-a" data-position="0 0.98 0" data-normal="0 1 0" aria-label="The lid"><i class="pin__dot"></i><span class="pin__line"></span><span class="pin__card"><b>The lid</b><em>Nothing is written down. Servers run from memory and forget everything on restart.</em></span></button>
+        <button class="pin pin--right" slot="hotspot-b" data-position="1.38 0 0.5" data-normal="1 0 0" aria-label="The figures"><i class="pin__dot"></i><span class="pin__line"></span><span class="pin__card"><b>The figures</b><em>Independent auditors, every year. Their reports go up unedited.</em></span></button>
+        <button class="pin pin--left" slot="hotspot-c" data-position="-0.7 -0.1 1.82" data-normal="0 0 1" aria-label="The columns"><i class="pin__dot"></i><span class="pin__line"></span><span class="pin__card"><b>The columns</b><em>Open source. Anyone can read the code that holds the wall up.</em></span></button>
+        <div class="exhibit__loading" slot="poster"><span></span></div>
+      </model-viewer>
+      <img class="exhibit__fallback" src="assets/gen-helmet.webp" alt="Marble Roman helmet" loading="lazy">
+      <div class="exhibit__plinth" aria-hidden="true"><i></i></div>
+      <div class="exhibit__label"><span class="exhibit__no">Exhibit II</span><b>Sarcophagus of Sidon</b><span>Marble, 4th century BC. Tap a pin, drag to turn.</span></div>
+    </div>
   <div><p class="kicker fx">Threat model</p><h2 class="h2 fx d1">Who we<br><em>defend against.</em></h2>
   <ul class="list fx d2" style="margin-top:2rem">
    <li><span class="i">A</span><span class="t">Your ISP and mobile carrier</span><span class="r">Sees only a tunnel</span></li>

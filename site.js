@@ -56,3 +56,56 @@
     f.addEventListener('submit',function(e){ e.preventDefault(); var n=f.querySelector('.notice'); if(n){ n.textContent='Received. A courier will reply within one day.'; n.style.borderColor='var(--gold)'; } });
   });
 })();
+
+/* Exhibits: 3D objects with pins, scroll-driven turn, graceful fallback */
+(function(){
+  var exs=document.querySelectorAll('.exhibit'); if(!exs.length) return;
+  var canGL=(function(){try{var c=document.createElement('canvas');return !!(c.getContext('webgl2')||c.getContext('webgl'));}catch(e){return false;}})();
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  exs.forEach(function(ex){
+    var mv=ex.querySelector('model-viewer'); if(!mv) return;
+    var cap=ex.querySelector('.exhibit__caption');
+    function fallback(){ ex.classList.add('exhibit--fallback'); }
+    if(!canGL||!('customElements' in window)){ fallback(); return; }
+    fetch(mv.getAttribute('src'),{method:'HEAD'}).then(function(r){ if(!r.ok) fallback(); }).catch(fallback);
+    mv.addEventListener('error',fallback);
+    mv.addEventListener('load',function(){ mv.classList.add('is-ready'); });
+    var base=parseFloat(mv.dataset.base||'-30'), turn=parseFloat(mv.dataset.turn||'220');
+    var cur=base,target=base,raf=0,userOffset=0;
+    function unclip(){ var sr=mv.shadowRoot; if(!sr||sr.querySelector('#unclip')) return; var s=document.createElement('style'); s.id='unclip'; s.textContent='.slot.default>div,.slot.default,.container{overflow:visible !important}'; sr.appendChild(s); }
+    unclip(); mv.addEventListener('load',unclip); customElements.whenDefined('model-viewer').then(unclip);
+    var pins=[].slice.call(mv.querySelectorAll('.pin')), open=null;
+    function place(p){
+        var r=p.getBoundingClientRect(), right=p.classList.contains('pin--right');
+        var rem=parseFloat(getComputedStyle(document.documentElement).fontSize)||16;
+        var lead=parseFloat(getComputedStyle(p).getPropertyValue('--lead'))||7.5;
+        var card=p.querySelector('.pin__card'); if(!card) return;
+        var need=lead*rem+card.offsetWidth+24;
+        var roomR=window.innerWidth-r.left, roomL=r.left;
+        var natural=right?roomR:roomL, other=right?roomL:roomR;
+        p.classList.toggle('pin--flip', natural<need && other>natural);
+        /* last resort (narrow phones): slide the card so it stays fully on screen */
+        card.style.setProperty('--shift','0px');
+        var c=card.getBoundingClientRect(), pad=12, shift=0;
+        if(c.right>window.innerWidth-pad) shift=window.innerWidth-pad-c.right;
+        if(c.left+shift<pad) shift=pad-c.left;
+        card.style.setProperty('--shift',shift+'px');
+      }
+    function show(p){
+      pins.forEach(function(x){x.classList.toggle('is-open',x===p)});
+      ex.classList.toggle('has-open',!!p); open=p||null; if(p) place(p);
+    }
+    pins.forEach(function(p){ p.addEventListener('click',function(e){ e.stopPropagation(); show(open===p?null:p); }); });
+    document.addEventListener('pointerdown',function(e){ if(open && !e.target.closest('.pin')) show(null); },true);
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') show(null); });
+    mv.addEventListener('camera-change',function(e){ if(e.detail.source==='user-interaction'){ var o=mv.getCameraOrbit(); userOffset=o.theta*180/Math.PI-cur; if(open) place(open); } });
+    function tick(){ raf=0; cur+=(target-cur)*0.1; mv.cameraOrbit=(cur+userOffset).toFixed(2)+'deg auto auto'; if(Math.abs(target-cur)>0.05) raf=requestAnimationFrame(tick); }
+    function onScroll(){
+      if(reduce) return;
+      var r=ex.getBoundingClientRect(), vh=window.innerHeight;
+      var p=Math.max(0,Math.min(1,(vh-r.top)/(vh+r.height)));
+      target=base+p*turn; if(!raf) raf=requestAnimationFrame(tick);
+    }
+    window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  });
+})();
