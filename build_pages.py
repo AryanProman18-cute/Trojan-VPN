@@ -310,7 +310,7 @@ def legal(slug,title,intro,sections,img,word):
     toc=''.join(f'<li><a href="#s{i}">{t}</a></li>' for i,(t,_) in enumerate(sections))
     body=''.join(f'<h2 id="s{i}">{t}</h2>{p}' for i,(t,p) in enumerate(sections))
     return (title,intro,phero('Legal',title.replace(' ','<br>',1) if ' ' in title else title,intro,img,word)+
-      f'<section class="sec"><div class="split" style="align-items:start;grid-template-columns:14rem 1fr"><ul class="toc fx">{toc}</ul><div class="prose fx d1">{body}<p style="margin-top:3rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(233,228,216,.45)">Last updated 1 September 2026</p></div></div></section>')
+      f'<section class="sec"><div class="split split--legal"><ul class="toc fx">{toc}</ul><div class="prose fx d1">{body}<p style="margin-top:3rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(233,228,216,.45)">Last updated 1 September 2026</p></div></div></section>')
 
 pages['privacy']=legal('privacy','Privacy policy','The short version: we do not collect what we do not need, and we need almost nothing.',[
  ('What we collect','<p>An account number generated at signup. If you choose, an email for recovery. Payment records held by the processor, not linked to your activity.</p>'),
