@@ -2,7 +2,7 @@ import os
 OUT='/home/user/trojan-vpn'
 FONTS='<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="icon" href="assets/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Luxurious+Roman&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">'
 ARROW='<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 6h10M6.5 1.5 11 6l-4.5 4.5"/></svg>'
 NAV=['Home','Servers','Pricing','Security','Download']
@@ -41,6 +41,7 @@ def shell(slug,title,desc,body,current=None):
   <ul class="menu__list"><li><a href="servers.html">Servers</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="security.html">Security</a></li><li><a href="download.html">Download</a></li></ul>
   <div class="menu__rule"></div><div class="menu__foot"><a class="btn-play" href="pricing.html">Get protected</a></div>
 </div>
+<script>self.ModelViewerElement=self.ModelViewerElement||{};self.ModelViewerElement.minimumRenderScale=0.5;self.ModelViewerElement.powerPreference="high-performance";</script>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 <script src="site.js?v=20260921"></script>
 </body></html>'''
@@ -123,7 +124,7 @@ pages['security']=('Security','How Trojan VPN protects you: AES-256, WireGuard, 
   <div class="exhibit exhibit--wide fx" id="exhibitSarco">
       <div class="exhibit__light" aria-hidden="true"></div>
       <model-viewer class="exhibit__model" data-scroll-rotate data-base="-140" data-turn="260" src="assets/sarcophagus.glb?v=20260921" alt="3D marble sarcophagus from Sidon, carved with standing figures between columns"
-        loading="lazy" disable-zoom disable-pan interaction-prompt="none" camera-controls camera-orbit="-140deg 72deg 11m" min-camera-orbit="auto 55deg 11m" max-camera-orbit="auto 92deg 11m" camera-target="0m -0.2m 0m"
+        loading="lazy" disable-zoom disable-pan interaction-prompt="none" camera-controls camera-orbit="-140deg 72deg 11.5m" min-camera-orbit="auto 55deg 11.5m" max-camera-orbit="auto 92deg 11.5m" camera-target="0m -0.3m 0m"
         field-of-view="24deg" exposure="1.05" shadow-intensity="1.3" shadow-softness="0.7" environment-image="neutral" tone-mapping="aces">
         <button class="pin pin--right" slot="hotspot-a" data-position="0 0.98 0" data-normal="0 1 0" aria-label="The lid"><i class="pin__dot"></i><span class="pin__line"></span><span class="pin__card"><b>The lid</b><em>Nothing is written down. Servers run from memory and forget everything on restart.</em></span></button>
         <button class="pin pin--right" slot="hotspot-b" data-position="1.38 0 0.5" data-normal="1 0 0" aria-label="The figures"><i class="pin__dot"></i><span class="pin__line"></span><span class="pin__card"><b>The figures</b><em>Independent auditors, every year. Their reports go up unedited.</em></span></button>

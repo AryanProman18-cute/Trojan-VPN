@@ -73,6 +73,7 @@
     var base=parseFloat(mv.dataset.base||'-30'), turn=parseFloat(mv.dataset.turn||'220');
     var cur=base,target=base,raf=0,userOffset=0;
     function unclip(){ var sr=mv.shadowRoot; if(!sr||sr.querySelector('#unclip')) return; var s=document.createElement('style'); s.id='unclip'; s.textContent='.slot.default>div,.slot.default,.container{overflow:visible !important}'; sr.appendChild(s); }
+    if(Math.min(window.innerWidth,window.innerHeight)<=820){ mv.setAttribute('shadow-intensity','0.9'); mv.setAttribute('shadow-softness','1'); }
     unclip(); mv.addEventListener('load',unclip); customElements.whenDefined('model-viewer').then(unclip);
     var pins=[].slice.call(mv.querySelectorAll('.pin')), open=null;
     function place(p){
